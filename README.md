@@ -14,12 +14,12 @@ Este proyecto corresponde al **frontend** del sistema de Divorcios de la Municip
 
 | Integrante | GitHub |
 |-----------|--------|
-| **Chan Vasquez Yanxmarcos** | [@yanxmarcos](https://github.com/yanxmarcos) |
-| **Chacon Reyes Jose Alberto** | [@josechacon](https://github.com/Mbapeint) |
-| **Albitres Cieza Rodrigo** | [@rodrigoalbitres](https://github.com/Manrodacc) |
-| **Avila Zamudio Eliaser** | [@eliaseravila](https://github.com/Desconocido-0) |
+| **Chan Vasquez Yanxmarcos** | [@Yanxmarcos](https://github.com/yanxmarcos) |
+| **Chacon Reyes Jose Alberto** | [@Mbapeint](https://github.com/Mbapeint) |
+| **Albitres Cieza Rodrigo** | [@Manrodacc](https://github.com/Manrodacc) |
+| **Avila Zamudio Eliaser** | [@Desconocido-0](https://github.com/Desconocido-0) |
 | **Luis Bacilio Cesar** | [@cesarluis]() |
-| **Rodriguez Zavaleta Erick** | [@erickrodriguez](https://github.com/ErickRZ10) |
+| **Rodriguez Zavaleta Erick** | [@ErickRZ10](https://github.com/ErickRZ10) |
 
 ---
 
