@@ -1,20 +1,20 @@
 export const expedientes = [
   {
     id: '00147',
-    number: 'EXP2026-00147',
-    applicants: 'Ana Torres / Luis Mendoza',
-    dni: '12345678 / 87654321',
-    status: 'En revisión',
+    number: 'TRA2026-00147',
+    applicants: 'Juan Carlos Pérez / María Elena Torres',
+    dni: '11111111 / 22222222',
+    status: 'Pre-registrado',
     variant: 'warning',
-    entryDate: '09/09/2026',
+    entryDate: '02/10/2026',
     spouses: [
-      { name: 'ANA TORRES RAMÍREZ', dni: '12345678', phone: '987 654 321' },
-      { name: 'LUIS MENDOZA FLORES', dni: '87654321', phone: '986 123 456' },
+      { name: 'JUAN CARLOS PÉREZ GARCÍA', dni: '11111111', phone: '987 654 321' },
+      { name: 'MARÍA ELENA TORRES RAMÍREZ', dni: '22222222', phone: '986 123 456' },
     ],
   },
   {
     id: '00146',
-    number: 'EXP2026-00146',
+    number: 'TRA2026-00146',
     applicants: 'Rosa Salazar / Marco Ruiz',
     dni: '45879621 / 70451236',
     status: 'Pre-registrado',
@@ -27,7 +27,7 @@ export const expedientes = [
   },
   {
     id: '00145',
-    number: 'EXP2026-00145',
+    number: 'TRA2026-00145',
     applicants: 'Julia Castro / Pedro León',
     dni: '61472583 / 50893614',
     status: 'En Audiencia',
@@ -40,7 +40,7 @@ export const expedientes = [
   },
   {
     id: '00144',
-    number: 'EXP2026-00144',
+    number: 'TRA2026-00144',
     applicants: 'Carla Vega / Diego Ramos',
     dni: '72584961 / 43617592',
     status: 'Concluido',
@@ -53,7 +53,7 @@ export const expedientes = [
   },
   {
     id: '00143',
-    number: 'EXP2026-00143',
+    number: 'TRA2026-00143',
     applicants: 'María Rojas / José Flores',
     dni: '36985214 / 74125896',
     status: 'En revisión',
@@ -66,7 +66,7 @@ export const expedientes = [
   },
   {
     id: '00142',
-    number: 'EXP2026-00142',
+    number: 'TRA2026-00142',
     applicants: 'Elena Díaz / Jorge Soto',
     dni: '85214736 / 96325874',
     status: 'Pre-registrado',
@@ -79,7 +79,7 @@ export const expedientes = [
   },
   {
     id: '00141',
-    number: 'EXP2026-00141',
+    number: 'TRA2026-00141',
     applicants: 'Lucía Campos / Raúl Peña',
     dni: '14785236 / 25896314',
     status: 'En Audiencia',
@@ -92,7 +92,7 @@ export const expedientes = [
   },
   {
     id: '00140',
-    number: 'EXP2026-00140',
+    number: 'TRA2026-00140',
     applicants: 'Sofía Medina / Carlos Núñez',
     dni: '32165498 / 78945612',
     status: 'Concluido',
@@ -105,7 +105,7 @@ export const expedientes = [
   },
   {
     id: '00139',
-    number: 'EXP2026-00139',
+    number: 'TRA2026-00139',
     applicants: 'Patricia Luna / Miguel Ortiz',
     dni: '65412387 / 98732145',
     status: 'En revisión',
@@ -118,7 +118,7 @@ export const expedientes = [
   },
   {
     id: '00138',
-    number: 'EXP2026-00138',
+    number: 'TRA2026-00138',
     applicants: 'Teresa Silva / Andrés Gil',
     dni: '15975348 / 35795146',
     status: 'Pre-registrado',

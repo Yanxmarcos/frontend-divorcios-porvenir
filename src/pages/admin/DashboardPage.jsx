@@ -61,35 +61,35 @@ const monthlyData = [
 
 const recentCases = [
   {
-    number: 'EXP2026-00147',
-    applicants: 'Ana Torres / Luis Mendoza',
-    status: 'En revisión',
+    number: 'TRA2026-00147',
+    applicants: 'Juan Carlos Pérez / María Elena Torres',
+    status: 'Pre-registrado',
     variant: 'warning',
-    date: '09/09/2026',
+    date: '02/10/2026',
   },
   {
-    number: 'EXP2026-00146',
+    number: 'TRA2026-00146',
     applicants: 'Rosa Salazar / Marco Ruiz',
     status: 'Pre-registrado',
     variant: 'danger',
     date: '08/09/2026',
   },
   {
-    number: 'EXP2026-00145',
+    number: 'TRA2026-00145',
     applicants: 'Julia Castro / Pedro León',
     status: 'En Audiencia',
     variant: 'warning',
     date: '08/09/2026',
   },
   {
-    number: 'EXP2026-00144',
+    number: 'TRA2026-00144',
     applicants: 'Carla Vega / Diego Ramos',
     status: 'Concluido',
     variant: 'success',
     date: '07/09/2026',
   },
   {
-    number: 'EXP2026-00143',
+    number: 'TRA2026-00143',
     applicants: 'María Rojas / José Flores',
     status: 'Observado',
     variant: 'danger',
@@ -269,7 +269,7 @@ function DashboardPage() {
                 <table className="w-full min-w-[820px] border-collapse text-left">
                   <thead className="bg-neutral-50 text-xs font-bold uppercase tracking-wider text-neutral-600">
                     <tr>
-                      <th className="px-6 py-4 sm:px-8">N° Expediente</th>
+                      <th className="px-6 py-4 sm:px-8">N° de trámite</th>
                       <th className="px-6 py-4">Solicitantes</th>
                       <th className="px-6 py-4">Estado</th>
                       <th className="px-6 py-4">Fecha</th>

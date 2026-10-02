@@ -6,6 +6,9 @@ import {
   CheckCircle2,
   ClipboardPenLine,
   Clock3,
+  Download,
+  ExternalLink,
+  Eye,
   FileCheck,
   FileSearch,
   FileText,
@@ -116,6 +119,7 @@ function LandingPage() {
     exterior: null,
   })
   const [showRequirements, setShowRequirements] = useState(false)
+  const [selectedRequirement, setSelectedRequirement] = useState(baseRequirements[0])
 
   const formIsComplete = Object.values(answers).every(
     (answer) => answer !== null,
@@ -152,7 +156,10 @@ function LandingPage() {
 
   const handleRequirementsSubmit = (event) => {
     event.preventDefault()
-    if (formIsComplete) setShowRequirements(true)
+    if (formIsComplete) {
+      setSelectedRequirement(baseRequirements[0])
+      setShowRequirements(true)
+    }
   }
 
   return (
@@ -358,19 +365,65 @@ function LandingPage() {
                     </div>
                   </div>
                 </div>
-                <ul className="grid gap-3 p-6 sm:grid-cols-2 sm:p-8">
+                <div className="grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+                <div className="p-5 sm:p-6">
+                  <p className="mb-4 text-sm leading-6 text-neutral-600">
+                    Seleccione un requisito para visualizar su documento de ejemplo.
+                  </p>
+                <ul className="space-y-3">
                   {requirements.map((requirement) => (
                     <li
-                      className="flex items-start gap-3 rounded-xl bg-neutral-50 p-4 text-sm leading-6 text-neutral-800"
                       key={requirement}
                     >
+                      <button
+                        aria-pressed={selectedRequirement === requirement}
+                        className={`flex w-full items-start gap-3 rounded-lg border p-4 text-left transition-colors focus:outline-none focus:ring-4 focus:ring-primary-light ${selectedRequirement === requirement ? 'border-primary bg-primary-light/40' : 'border-neutral-200 bg-white hover:border-primary hover:bg-neutral-50'}`}
+                        onClick={() => setSelectedRequirement(requirement)}
+                        type="button"
+                      >
                       <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-green-100 text-leaf">
                         <Check aria-hidden="true" className="h-4 w-4" />
                       </span>
-                      <span>{requirement}</span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-base font-semibold leading-6 text-neutral-800">{requirement}</span>
+                        <span className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                          <Eye aria-hidden="true" className="h-4 w-4" />
+                          {selectedRequirement === requirement ? 'Vista previa seleccionada' : 'Ver documento de ejemplo'}
+                        </span>
+                      </span>
+                      </button>
                     </li>
                   ))}
                 </ul>
+                </div>
+                <section aria-label="Vista previa del documento de ejemplo" className="min-w-0 border-t border-neutral-200 bg-neutral-50 p-5 sm:p-6 lg:border-l lg:border-t-0">
+                  <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-primary">
+                    <FileText aria-hidden="true" className="h-5 w-5" />
+                    Documento de ejemplo · PDF
+                  </div>
+                  <h4 className="mt-3 text-lg font-bold leading-7 text-neutral-900">{selectedRequirement}</h4>
+                  <p className="mt-2 text-sm leading-6 text-neutral-600">
+                    Muestra referencial para la demostración. Todos los requisitos utilizan el mismo documento de ejemplo.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <a className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-primary bg-white px-4 py-2 text-sm font-bold text-primary hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary-light" href="/EJEMPLO.pdf" rel="noopener noreferrer" target="_blank">
+                      <ExternalLink aria-hidden="true" className="h-4 w-4" />Abrir PDF
+                    </a>
+                    <a className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-primary-light" download="Documento-de-ejemplo.pdf" href="/EJEMPLO.pdf">
+                      <Download aria-hidden="true" className="h-4 w-4" />Descargar ejemplo
+                    </a>
+                  </div>
+                  <div className="mt-5 overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-sm">
+                    <object aria-label={`Documento de ejemplo: ${selectedRequirement}`} className="block h-[480px] w-full sm:h-[600px]" data="/EJEMPLO.pdf#view=FitH" type="application/pdf">
+                      <div className="p-8 text-center">
+                        <FileText aria-hidden="true" className="mx-auto h-12 w-12 text-primary" />
+                        <p className="mt-4 text-base leading-7 text-neutral-600">Su navegador no permite mostrar el PDF aquí. Puede abrirlo en una nueva pestaña o descargarlo.</p>
+                        <a className="mt-4 inline-block font-bold text-primary underline" href="/EJEMPLO.pdf" rel="noopener noreferrer" target="_blank">Ver documento de ejemplo</a>
+                      </div>
+                    </object>
+                  </div>
+                </section>
+                </div>
               </div>
             )}
           </div>

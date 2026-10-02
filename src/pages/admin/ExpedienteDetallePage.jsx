@@ -70,6 +70,9 @@ function ExpedienteDetallePage() {
   const caseData = expedientes.find((caseItem) => caseItem.id === id)
   const [actionMessage, setActionMessage] = useState('')
   const [note, setNote] = useState('')
+  const [officialNumber, setOfficialNumber] = useState('')
+  const [officialNumberInput, setOfficialNumberInput] = useState('')
+  const [officialNumberError, setOfficialNumberError] = useState('')
   const [internalNotes, setInternalNotes] = useState([
     {
       author: 'Dra. María García',
@@ -140,7 +143,7 @@ function ExpedienteDetallePage() {
               <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
                 <div>
                   <p className="text-sm font-bold uppercase tracking-[0.16em] text-neutral-600">
-                    Número de expediente
+                    Número de trámite interno
                   </p>
                   <div className="mt-2 flex flex-wrap items-center gap-3">
                     <h2 className="font-heading text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl">
@@ -184,6 +187,26 @@ function ExpedienteDetallePage() {
 
             <div className="mt-6 grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
               <div className="space-y-6">
+                <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+                  <h2 className="text-xl font-extrabold text-neutral-900">Expediente de Mesa de Partes</h2>
+                  <p className="mt-2 leading-7 text-neutral-600">El número de trámite identifica la solicitud internamente. Registre el número de expediente cuando Mesa de Partes lo asigne.</p>
+                  <p className="mt-4 rounded-lg bg-neutral-50 p-4 font-semibold text-neutral-800">{officialNumber || 'Pendiente de asignación por Mesa de Partes'}</p>
+                  <form className="mt-5" onSubmit={(event) => {
+                    event.preventDefault()
+                    if (!officialNumberInput.trim()) { setOfficialNumberError('Ingrese el número asignado por Mesa de Partes.'); return }
+                    setOfficialNumber(officialNumberInput.trim())
+                    setOfficialNumberInput('')
+                    setOfficialNumberError('')
+                  }}>
+                    <label className="block text-sm font-bold text-neutral-800" htmlFor="official-case-number">Número de expediente asignado por Mesa de Partes</label>
+                    <div className="mt-2 flex flex-col gap-3 sm:flex-row">
+                      <input className="min-h-12 min-w-0 flex-1 rounded-xl border border-neutral-200 px-4 py-3 text-base focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary-light" id="official-case-number" maxLength={80} value={officialNumberInput} onChange={(event) => { setOfficialNumberInput(event.target.value); setOfficialNumberError('') }} placeholder="Ingrese el número asignado" />
+                      <button className="rounded-xl bg-primary px-5 py-3 font-bold text-white hover:bg-primary-dark" type="submit">{officialNumber ? 'Actualizar expediente' : 'Registrar expediente'}</button>
+                    </div>
+                    {officialNumberError && <p className="mt-2 text-sm text-primary" role="alert">{officialNumberError}</p>}
+                    <p className="mt-3 text-sm text-neutral-600">Registro simulado para la presentación; no se envía a Mesa de Partes.</p>
+                  </form>
+                </section>
                 <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
                   <div className="flex items-center gap-3">
                     <UserRound aria-hidden="true" className="h-6 w-6 text-primary" />
