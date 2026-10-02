@@ -8,7 +8,11 @@ import {
   CalendarDays,
   Check,
   CheckCircle2,
+  Download,
+  ExternalLink,
+  Eye,
   FileCheck2,
+  FileSearch,
   FileText,
   Globe2,
   Home,
@@ -25,6 +29,8 @@ import { Link } from 'react-router-dom'
 import { z } from 'zod'
 import ProgressBar from '../../components/ui/ProgressBar.jsx'
 import Stepper from '../../components/ui/Stepper.jsx'
+import FilePreview from '../../components/shared/FilePreview.jsx'
+import { identidadDemo, conyugeDemo } from '../../mock/identidad.js'
 
 const steps = [
   'Verificación de identidad',
@@ -37,7 +43,11 @@ const steps = [
 const formSchema = z
   .object({
     dni: z.string().regex(/^\d{8}$/, 'Ingrese un DNI válido de 8 dígitos.'),
+    codigoDireccion: z.string().regex(/^[A-Z0-9]{3}$/, 'Ingrese los últimos 3 caracteres de la dirección de su DNI.'),
     nombres: z.string().trim().min(3, 'Ingrese los nombres completos.'),
+    dniConyuge: z.string().regex(/^\d{8}$/, 'Ingrese el DNI del otro cónyuge (8 dígitos).'),
+    codigoConyuge: z.string().regex(/^[A-Z0-9]{3}$/, 'Ingrese los últimos 3 caracteres de la dirección del DNI.'),
+    nombresConyuge: z.string().min(3, 'Verifique los datos del otro cónyuge.'),
     fechaMatrimonio: z.string().min(1, 'Seleccione la fecha de matrimonio.'),
     lugarMatrimonio: z.string().min(1, 'Seleccione el lugar del matrimonio.'),
     direccion: z
@@ -126,9 +136,13 @@ function PreRegistroPage() {
   const [currentStep, setCurrentStep] = useState(1)
   const [identityStatus, setIdentityStatus] = useState(null)
   const [isLookingUp, setIsLookingUp] = useState(false)
+  const [spouseVerified, setSpouseVerified] = useState(false)
+  const [isLookingUpSpouse, setIsLookingUpSpouse] = useState(false)
   const [uploadedFiles, setUploadedFiles] = useState({})
   const [fileErrors, setFileErrors] = useState({})
-  const [trackingNumber, setTrackingNumber] = useState('')
+  const [exampleDocumentId, setExampleDocumentId] = useState(null)
+  const [confirmationDocumentId, setConfirmationDocumentId] = useState(null)
+  const [preRegistrationCompleted, setPreRegistrationCompleted] = useState(false)
 
   const {
     clearErrors,
@@ -143,7 +157,11 @@ function PreRegistroPage() {
   } = useForm({
     defaultValues: {
       dni: '',
+      codigoDireccion: '',
       nombres: '',
+      dniConyuge: '',
+      codigoConyuge: '',
+      nombresConyuge: '',
       fechaMatrimonio: '',
       lugarMatrimonio: '',
       direccion: '',
@@ -204,43 +222,79 @@ function PreRegistroPage() {
   }, [childrenCount, hasSharedAssets, spouseAbroad])
 
   const dniRegistration = register('dni')
+  const addressCodeRegistration = register('codigoDireccion')
   const maximumMarriageDate = new Date().toISOString().split('T')[0]
 
   const lookupIdentity = async () => {
-    const dniIsValid = await trigger('dni')
+    const dniIsValid = await trigger(['dni', 'codigoDireccion'])
     if (!dniIsValid) return
+
+    const submittedDni = getValues('dni')
+    const submittedCode = getValues('codigoDireccion')
 
     setIsLookingUp(true)
     setIdentityStatus(null)
     await new Promise((resolve) => setTimeout(resolve, 650))
 
-    if (getValues('dni') === '12345678') {
-      setValue('nombres', 'JUAN PÉREZ GARCÍA', { shouldValidate: true })
+    if (submittedDni !== getValues('dni') || submittedCode !== getValues('codigoDireccion')) {
+      setIsLookingUp(false)
+      return
+    }
+
+    if (submittedDni === identidadDemo.dni && submittedCode === identidadDemo.codigoDireccion) {
+      setValue('nombres', identidadDemo.nombres, { shouldValidate: true })
       setIdentityStatus('verified')
     } else {
       setValue('nombres', '')
       clearErrors('nombres')
-      setIdentityStatus('manual')
+      setIdentityStatus('failed')
     }
 
     setIsLookingUp(false)
   }
 
+  const lookupSpouse = async () => {
+    if (!await trigger(['dniConyuge', 'codigoConyuge'])) return
+    const spouseDni = getValues('dniConyuge')
+    const spouseCode = getValues('codigoConyuge')
+    setIsLookingUpSpouse(true)
+    setSpouseVerified(false)
+    setValue('nombresConyuge', '')
+    await new Promise((resolve) => setTimeout(resolve, 650))
+    if (spouseDni === getValues('dniConyuge') && spouseCode === getValues('codigoConyuge')) {
+      if (spouseDni === conyugeDemo.dni && spouseCode === conyugeDemo.codigoDireccion && spouseDni !== getValues('dni')) {
+        setValue('nombresConyuge', conyugeDemo.nombres, { shouldValidate: true })
+        clearErrors('dniConyuge')
+        setSpouseVerified(true)
+      } else {
+        setError('dniConyuge', { type: 'manual', message: 'El DNI y el código de dirección no coinciden con el registro del otro cónyuge.' })
+      }
+    }
+    setIsLookingUpSpouse(false)
+  }
+
   const validateCurrentStep = async () => {
     if (currentStep === 1) {
-      if (!identityStatus) {
+      if (identityStatus !== 'verified') {
         setError('dni', {
-          message: 'Presione Continuar para consultar el DNI.',
+          message: 'Verifique el DNI y el código de dirección para continuar.',
           type: 'manual',
         })
         return false
       }
 
-      return trigger(['dni', 'nombres'])
+      return trigger(['dni', 'codigoDireccion', 'nombres'])
     }
 
     if (currentStep === 2) {
+      if (!spouseVerified) {
+        setError('dniConyuge', { type: 'manual', message: 'Verifique los datos del otro cónyuge para continuar.' })
+        return false
+      }
       const fieldsAreValid = await trigger([
+        'dniConyuge',
+        'codigoConyuge',
+        'nombresConyuge',
         'fechaMatrimonio',
         'lugarMatrimonio',
         'direccion',
@@ -329,11 +383,11 @@ function PreRegistroPage() {
   }
 
   const submitApplication = () => {
-    setTrackingNumber('EXP2026-48271')
+    setPreRegistrationCompleted(true)
     window.scrollTo({ behavior: 'smooth', top: 0 })
   }
 
-  if (trackingNumber) {
+  if (preRegistrationCompleted) {
     return (
       <main className="grid min-h-[100svh] place-items-center bg-neutral-50 px-5 py-12">
         <div className="success-pop-in w-full max-w-2xl rounded-3xl border border-neutral-200 bg-white p-7 text-center shadow-xl sm:p-12">
@@ -341,28 +395,28 @@ function PreRegistroPage() {
             <CheckCircle2 aria-hidden="true" className="h-12 w-12" />
           </span>
           <p className="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-leaf">
-            Registro completado
+            Pre-registro completado
           </p>
           <h1 className="mt-3 text-3xl font-extrabold text-neutral-900 sm:text-4xl">
-            Su solicitud fue registrada
+            Su pre-registro de solicitud de divorcio fue completado
           </h1>
           <p className="mt-5 leading-7 text-neutral-600">
-            Guarde este número para consultar el estado de su trámite.
+            Puede consultar el estado de su trámite ingresando su DNI en
+            “Consultar estado”.
           </p>
-          <div className="mt-7 rounded-2xl border border-primary-light bg-primary-light/50 p-5">
-            <span className="block text-sm font-semibold text-primary-dark">
-              Número de seguimiento
-            </span>
-            <strong className="mt-2 block font-heading text-2xl tracking-wider text-primary sm:text-3xl">
-              {trackingNumber}
-            </strong>
-          </div>
+          <Link
+            className="mt-7 inline-flex min-h-13 items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3 font-bold text-white transition hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-primary-light"
+            to="/consulta-estado"
+          >
+            <FileSearch aria-hidden="true" className="h-5 w-5" />
+            Consultar estado
+          </Link>
           <p className="mx-auto mt-7 max-w-lg text-sm leading-6 text-neutral-600">
             Le notificaremos por correo y teléfono cuando su expediente esté en
             revisión.
           </p>
           <Link
-            className="mt-8 inline-flex min-h-13 items-center justify-center rounded-xl bg-primary px-7 py-3 font-bold text-white transition hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-primary-light"
+            className="mt-8 inline-flex min-h-13 items-center justify-center rounded-xl border border-neutral-200 px-7 py-3 font-bold text-neutral-800 transition hover:bg-neutral-50 focus:outline-none focus:ring-4 focus:ring-primary-light"
             to="/"
           >
             Volver al inicio
@@ -424,7 +478,7 @@ function PreRegistroPage() {
                     Verificación de identidad
                   </h2>
                   <p className="mt-2 leading-7 text-neutral-600">
-                    Ingrese su DNI para consultar los datos del solicitante.
+                    Ingrese su DNI y los últimos 3 caracteres de la dirección que aparece en su DNI para verificar sus datos.
                   </p>
                 </div>
               </div>
@@ -447,7 +501,7 @@ function PreRegistroPage() {
                       setIdentityStatus(null)
                       setValue('nombres', '')
                     }}
-                    placeholder="12345678"
+                    placeholder="Ingrese 8 dígitos"
                   />
                 </div>
                 {errors.dni && (
@@ -455,6 +509,27 @@ function PreRegistroPage() {
                     {errors.dni.message}
                   </p>
                 )}
+                <div className="mt-5">
+                  <label className={labelClassName} htmlFor="codigoDireccion">Últimos 3 caracteres de la dirección del DNI</label>
+                  <input
+                    {...addressCodeRegistration}
+                    aria-describedby="codigo-direccion-ayuda"
+                    className={`${inputClassName} uppercase tracking-widest`}
+                    id="codigoDireccion"
+                    maxLength={3}
+                    autoComplete="off"
+                    onChange={(event) => {
+                      event.target.value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '')
+                      addressCodeRegistration.onChange(event)
+                      setIdentityStatus(null)
+                      setValue('nombres', '')
+                    }}
+                    placeholder="Ej.: ABC"
+                  />
+                  <p className="mt-2 text-sm leading-6 text-neutral-600" id="codigo-direccion-ayuda">Pueden ser letras o números. Escríbalos tal como figuran al final de su dirección.</p>
+                  {errors.codigoDireccion && <p className="mt-2 text-sm font-semibold text-primary" role="alert">{errors.codigoDireccion.message}</p>}
+                </div>
+                <p className="mt-4 rounded-lg border border-neutral-200 bg-neutral-50 p-3 text-sm text-neutral-600">Demostración con datos ficticios: DNI <strong>11111111</strong> y código de dirección <strong>ABC</strong>.</p>
                 <button
                   className="mt-5 inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 font-bold text-white shadow-sm transition hover:bg-primary-dark disabled:cursor-wait disabled:opacity-70 sm:w-auto"
                   disabled={isLookingUp || dni.length !== 8}
@@ -488,11 +563,11 @@ function PreRegistroPage() {
                     <p className="text-sm font-semibold leading-6">
                       {identityStatus === 'verified'
                         ? 'DNI verificado correctamente'
-                        : 'No se encontraron datos, continúe manualmente'}
+                        : 'El DNI y el código de dirección no coinciden con el registro. Revise los datos e intente nuevamente.'}
                     </p>
                   </div>
 
-                  <div className="mt-5">
+                  {identityStatus === 'verified' && <div className="mt-5">
                     <label className={labelClassName} htmlFor="nombres">
                       Nombres completos
                     </label>
@@ -511,7 +586,15 @@ function PreRegistroPage() {
                         {errors.nombres.message}
                       </p>
                     )}
-                  </div>
+                    <dl className="mt-5 grid gap-4 rounded-xl border border-neutral-200 bg-neutral-50 p-5 sm:grid-cols-2">
+                      {[
+                        ['Fecha de nacimiento', '15/04/1988'],
+                        ['Estado civil', identidadDemo.estadoCivil],
+                        ['Dirección registrada en el DNI', identidadDemo.direccion],
+                        ['Ubicación', `${identidadDemo.distrito}, ${identidadDemo.provincia}, ${identidadDemo.departamento}`],
+                      ].map(([label, value]) => <div key={label}><dt className="text-sm text-neutral-600">{label}</dt><dd className="mt-1 text-base font-semibold text-neutral-900">{value}</dd></div>)}
+                    </dl>
+                  </div>}
                 </div>
               )}
             </section>
@@ -533,6 +616,25 @@ function PreRegistroPage() {
                 </div>
               </div>
 
+              <section className="mt-8 rounded-xl border border-neutral-200 bg-neutral-50 p-5 sm:p-6" aria-labelledby="spouse-title">
+                <h3 className="text-xl font-bold text-neutral-900" id="spouse-title">Datos del otro cónyuge</h3>
+                <p className="mt-2 leading-7 text-neutral-600">Verifique a la segunda persona que participa en la solicitud.</p>
+                <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label className={labelClassName} htmlFor="dniConyuge">DNI del otro cónyuge</label>
+                    <input {...register('dniConyuge', { onChange: () => { setSpouseVerified(false); setValue('nombresConyuge', '') } })} className={inputClassName} id="dniConyuge" inputMode="numeric" maxLength={8} placeholder="22222222" disabled={isLookingUpSpouse} />
+                    {errors.dniConyuge && <p className="mt-2 text-sm font-semibold text-primary" role="alert">{errors.dniConyuge.message}</p>}
+                  </div>
+                  <div>
+                    <label className={labelClassName} htmlFor="codigoConyuge">Últimos 3 caracteres de la dirección del DNI</label>
+                    <input {...register('codigoConyuge', { setValueAs: (value) => value.toUpperCase().trim(), onChange: () => { setSpouseVerified(false); setValue('nombresConyuge', '') } })} className={`${inputClassName} uppercase`} id="codigoConyuge" maxLength={3} placeholder="DEF" disabled={isLookingUpSpouse} />
+                    {errors.codigoConyuge && <p className="mt-2 text-sm font-semibold text-primary" role="alert">{errors.codigoConyuge.message}</p>}
+                  </div>
+                </div>
+                <p className="mt-3 text-sm text-neutral-600">Datos ficticios de demostración: DNI 22222222 y código DEF.</p>
+                <button className="mt-4 inline-flex min-h-12 items-center gap-2 rounded-lg bg-primary px-5 py-3 font-bold text-white hover:bg-primary-dark disabled:opacity-60" onClick={lookupSpouse} disabled={isLookingUpSpouse} type="button">{isLookingUpSpouse ? <LoaderCircle aria-hidden="true" className="h-5 w-5 animate-spin" /> : <IdCard aria-hidden="true" className="h-5 w-5" />}{isLookingUpSpouse ? 'Consultando...' : 'Verificar cónyuge'}</button>
+                {spouseVerified && <div className="mt-5 rounded-lg border border-green-200 bg-green-50 p-5" role="status"><p className="flex items-center gap-2 font-bold text-leaf"><CheckCircle2 aria-hidden="true" className="h-5 w-5" />Cónyuge verificado correctamente</p><p className="mt-3 font-bold text-neutral-900">{conyugeDemo.nombres}</p><p className="mt-2 text-sm leading-6 text-neutral-600">DNI: {conyugeDemo.dni} · Estado civil: {conyugeDemo.estadoCivil}<br />Dirección del DNI: {conyugeDemo.direccion}</p></div>}
+              </section>
               <div className="mt-8 grid gap-6 md:grid-cols-2">
                 <div>
                   <label className={labelClassName} htmlFor="fechaMatrimonio">
@@ -672,13 +774,13 @@ function PreRegistroPage() {
                       {hasSharedAssets ? 'Sí' : 'No'}
                     </span>
                     <span
-                      className={`relative h-8 w-14 rounded-full transition-colors ${
+                      className={`relative inline-block h-8 w-14 shrink-0 rounded-full transition-colors ${
                         hasSharedAssets ? 'bg-primary' : 'bg-neutral-400'
                       }`}
                     >
                       <span
-                        className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow-sm transition-transform ${
-                          hasSharedAssets ? 'translate-x-7' : 'translate-x-1'
+                        className={`absolute left-1 top-1 h-6 w-6 rounded-full bg-white shadow-sm transition-transform ${
+                          hasSharedAssets ? 'translate-x-6' : 'translate-x-0'
                         }`}
                       />
                     </span>
@@ -703,13 +805,13 @@ function PreRegistroPage() {
                       {spouseAbroad ? 'Sí' : 'No'}
                     </span>
                     <span
-                      className={`relative h-8 w-14 rounded-full transition-colors ${
+                      className={`relative inline-block h-8 w-14 shrink-0 rounded-full transition-colors ${
                         spouseAbroad ? 'bg-primary' : 'bg-neutral-400'
                       }`}
                     >
                       <span
-                        className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow-sm transition-transform ${
-                          spouseAbroad ? 'translate-x-7' : 'translate-x-1'
+                        className={`absolute left-1 top-1 h-6 w-6 rounded-full bg-white shadow-sm transition-transform ${
+                          spouseAbroad ? 'translate-x-6' : 'translate-x-0'
                         }`}
                       />
                     </span>
@@ -839,6 +941,17 @@ function PreRegistroPage() {
                           </div>
                         </div>
 
+                        <div className="flex shrink-0 flex-wrap gap-3">
+                        <button
+                          aria-controls={`example-${document.id}`}
+                          aria-expanded={exampleDocumentId === document.id}
+                          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-neutral-200 px-4 py-2 text-sm font-bold text-neutral-800 transition hover:border-primary hover:bg-primary-light hover:text-primary focus:outline-none focus:ring-4 focus:ring-primary-light"
+                          onClick={() => setExampleDocumentId((current) => current === document.id ? null : document.id)}
+                          type="button"
+                        >
+                          <Eye aria-hidden="true" className="h-5 w-5" />
+                          {exampleDocumentId === document.id ? 'Ocultar ejemplo' : 'Ver ejemplo'}
+                        </button>
                         <label
                           className="inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg border border-primary px-4 py-2 text-sm font-bold text-primary transition hover:bg-primary hover:text-white focus-within:ring-4 focus-within:ring-primary-light"
                           htmlFor={`document-${document.id}`}
@@ -853,12 +966,29 @@ function PreRegistroPage() {
                             type="file"
                           />
                         </label>
+                        </div>
                       </div>
+                      {exampleDocumentId === document.id && (
+                        <section className="requirements-fade-in mt-5 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50" id={`example-${document.id}`} aria-label={`Ejemplo de ${document.name}`}>
+                          <div className="border-b border-neutral-200 p-4 sm:p-5">
+                            <h3 className="text-base font-bold text-neutral-900">Documento de ejemplo: {document.name}</h3>
+                            <p className="mt-2 text-sm leading-6 text-neutral-600">Muestra referencial para la demostración. Revise el ejemplo antes de cargar su propio documento.</p>
+                            <div className="mt-3 flex flex-wrap gap-3">
+                              <a className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-primary bg-white px-4 py-2 text-sm font-bold text-primary hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary-light" href="/EJEMPLO.pdf" target="_blank" rel="noopener noreferrer"><ExternalLink aria-hidden="true" className="h-4 w-4" />Abrir PDF</a>
+                              <a className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-primary-light" href="/EJEMPLO.pdf" download="Documento-de-ejemplo.pdf"><Download aria-hidden="true" className="h-4 w-4" />Descargar ejemplo</a>
+                            </div>
+                          </div>
+                          <object className="block h-[450px] w-full bg-white sm:h-[600px]" data="/EJEMPLO.pdf#view=FitH" type="application/pdf" aria-label={`Vista previa del ejemplo de ${document.name}`}>
+                            <p className="p-6 text-center text-neutral-600">Su navegador no permite mostrar el PDF aquí. <a className="font-bold text-primary underline" href="/EJEMPLO.pdf" target="_blank" rel="noopener noreferrer">Abrir documento de ejemplo</a></p>
+                          </object>
+                        </section>
+                      )}
                       {fileErrors[document.id] && (
                         <p className="mt-3 text-sm font-semibold text-primary" role="alert">
                           {fileErrors[document.id]}
                         </p>
                       )}
+                      {uploadedFile && <FilePreview file={uploadedFile} />}
                     </div>
                   )
                 })}
@@ -894,6 +1024,7 @@ function PreRegistroPage() {
               <div className="mt-8 grid gap-5 md:grid-cols-2">
                 <div className="rounded-xl bg-neutral-50 p-5">
                   <h3 className="font-bold text-neutral-900">Identidad</h3>
+                  <p className="mt-3 text-sm font-bold text-primary">Solicitante</p>
                   <dl className="mt-4 space-y-3 text-sm">
                     <div>
                       <dt className="text-neutral-600">DNI</dt>
@@ -906,6 +1037,11 @@ function PreRegistroPage() {
                       </dd>
                     </div>
                   </dl>
+                  <div className="mt-5 border-t border-neutral-200 pt-4">
+                    <h4 className="text-sm font-bold text-primary">Otro cónyuge</h4>
+                    <p className="mt-2 text-sm font-semibold text-neutral-900">{getValues('nombresConyuge')}</p>
+                    <p className="mt-1 text-sm text-neutral-600">DNI: {getValues('dniConyuge')}</p>
+                  </div>
                 </div>
 
                 <div className="rounded-xl bg-neutral-50 p-5">
@@ -964,18 +1100,39 @@ function PreRegistroPage() {
                   </dl>
                 </div>
 
-                <div className="rounded-xl bg-neutral-50 p-5">
+                <div className="rounded-xl bg-neutral-50 p-5 md:col-span-2">
                   <h3 className="font-bold text-neutral-900">Documentos</h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-600">Revise los archivos cargados antes de enviar su solicitud.</p>
                   <ul className="mt-4 space-y-3 text-sm">
                     {requiredDocuments.map((document) => (
-                      <li className="flex items-start gap-2" key={document.id}>
+                      <li className="rounded-lg border border-neutral-200 bg-white p-4" key={document.id}>
+                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex min-w-0 items-start gap-2">
                         <CheckCircle2
                           aria-hidden="true"
                           className="mt-0.5 h-4 w-4 shrink-0 text-leaf"
                         />
-                        <span className="min-w-0 truncate font-semibold text-neutral-800">
-                          {uploadedFiles[document.id]?.name}
-                        </span>
+                        <div className="min-w-0">
+                          <p className="font-semibold leading-6 text-neutral-800">{document.name}</p>
+                          <p className="mt-1 break-all text-neutral-600">{uploadedFiles[document.id]?.name}</p>
+                        </div>
+                        </div>
+                        <button
+                          aria-controls={`confirmation-document-${document.id}`}
+                          aria-expanded={confirmationDocumentId === document.id}
+                          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg border border-primary px-4 py-2 text-sm font-bold text-primary transition hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary-light"
+                          onClick={() => setConfirmationDocumentId((current) => current === document.id ? null : document.id)}
+                          type="button"
+                        >
+                          <Eye aria-hidden="true" className="h-4 w-4" />
+                          {confirmationDocumentId === document.id ? 'Ocultar documento' : 'Ver documento'}
+                        </button>
+                        </div>
+                        {confirmationDocumentId === document.id && uploadedFiles[document.id] && (
+                          <div className="requirements-fade-in" id={`confirmation-document-${document.id}`}>
+                            <FilePreview file={uploadedFiles[document.id]} />
+                          </div>
+                        )}
                       </li>
                     ))}
                   </ul>

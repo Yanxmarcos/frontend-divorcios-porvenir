@@ -115,7 +115,7 @@ function ExpedientesPage() {
                         setQuery(event.target.value)
                         setCurrentPage(1)
                       }}
-                      placeholder="DNI, apellidos o N° expediente"
+                      placeholder="DNI, apellidos o N° de trámite"
                       type="search"
                       value={query}
                     />
@@ -160,7 +160,7 @@ function ExpedientesPage() {
                 <table className="w-full min-w-[900px] border-collapse text-left">
                   <thead className="bg-neutral-50 text-xs font-bold uppercase tracking-wider text-neutral-600">
                     <tr>
-                      <th className="px-6 py-4 sm:px-8">N° Exp.</th>
+                      <th className="px-6 py-4 sm:px-8">N° de trámite</th>
                       <th className="px-6 py-4">Solicitantes</th>
                       <th className="px-6 py-4">DNI</th>
                       <th className="px-6 py-4">Estado</th>

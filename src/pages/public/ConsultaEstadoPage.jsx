@@ -3,6 +3,8 @@ import {
   ArrowLeft,
   ArrowRight,
   Download,
+  Eye,
+  ExternalLink,
   FileText,
   IdCard,
   LoaderCircle,
@@ -14,6 +16,7 @@ import { Link } from 'react-router-dom'
 import StatusTimeline from '../../components/shared/StatusTimeline.jsx'
 import Badge from '../../components/ui/Badge.jsx'
 import ProgressBar from '../../components/ui/ProgressBar.jsx'
+import { consultaTramiteDemo } from '../../mock/consultaTramite.js'
 
 const processStates = [
   'Pre-registrado',
@@ -22,45 +25,12 @@ const processStates = [
   'Concluido',
 ]
 
-const timelineItems = [
-  {
-    date: '10/05/2026',
-    description: 'Solicitud registrada correctamente',
-    status: 'complete',
-  },
-  {
-    date: '12/05/2026',
-    description: 'Documentos validados por la abogada',
-    status: 'complete',
-  },
-  {
-    date: '15/05/2026',
-    description: 'Audiencia de ratificación programada',
-    status: 'current',
-  },
-  {
-    date: 'Pendiente',
-    description: 'Resolución de admisibilidad',
-    status: 'pending',
-  },
-  {
-    date: 'Pendiente',
-    description: 'Segunda solicitud',
-    status: 'pending',
-  },
-  {
-    date: 'Pendiente',
-    description: 'Disolución final',
-    status: 'pending',
-  },
-]
-
 function ConsultaEstadoPage() {
   const [dni, setDni] = useState('')
   const [searchResult, setSearchResult] = useState(null)
   const [error, setError] = useState('')
   const [isSearching, setIsSearching] = useState(false)
-  const [citationMessage, setCitationMessage] = useState('')
+  const [previewDocument, setPreviewDocument] = useState(null)
 
   const handleSearch = async (event) => {
     event.preventDefault()
@@ -73,9 +43,9 @@ function ConsultaEstadoPage() {
 
     setError('')
     setIsSearching(true)
-    setCitationMessage('')
+    setPreviewDocument(null)
     await new Promise((resolve) => setTimeout(resolve, 600))
-    setSearchResult(dni === '12345678' ? 'found' : 'not-found')
+    setSearchResult(dni === consultaTramiteDemo.dni ? 'found' : 'not-found')
     setIsSearching(false)
   }
 
@@ -84,7 +54,7 @@ function ConsultaEstadoPage() {
     setDni(nextDni)
     setError('')
     setSearchResult(null)
-    setCitationMessage('')
+    setPreviewDocument(null)
   }
 
   return (
@@ -113,7 +83,7 @@ function ConsultaEstadoPage() {
             Consulte el estado de su trámite
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-600 sm:text-lg">
-            Ingrese el DNI del titular para revisar el avance del expediente.
+            Ingrese el DNI del titular para revisar su pre-registro, los documentos y el avance del trámite.
           </p>
         </div>
 
@@ -140,7 +110,8 @@ function ConsultaEstadoPage() {
               inputMode="numeric"
               maxLength="8"
               onChange={handleDniChange}
-              placeholder="12345678"
+              placeholder="11111111"
+              disabled={isSearching}
               value={dni}
             />
           </div>
@@ -166,6 +137,7 @@ function ConsultaEstadoPage() {
         <div aria-live="polite">
           {searchResult === 'found' && (
             <div className="wizard-panel-in mt-8 space-y-6">
+              <p className="rounded-lg border border-neutral-200 bg-white px-5 py-3 text-sm leading-6 text-neutral-600">Vista de demostración con datos ficticios. Los documentos se muestran con un PDF de ejemplo.</p>
               <section className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-md">
                 <div className="border-b border-neutral-200 bg-white p-6 sm:p-8">
                   <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
@@ -176,28 +148,29 @@ function ConsultaEstadoPage() {
                       <div className="min-w-0">
                         <p className="text-sm font-semibold text-neutral-600">Titular</p>
                         <h2 className="mt-1 truncate text-xl font-extrabold text-neutral-900 sm:text-2xl">
-                          JUAN PÉREZ GARCÍA
+                          {consultaTramiteDemo.titular}
                         </h2>
                       </div>
                     </div>
-                    <Badge variant="warning">En Audiencia</Badge>
+                    <Badge variant="warning">{consultaTramiteDemo.estado}</Badge>
                   </div>
                 </div>
 
                 <div className="grid gap-5 p-6 sm:grid-cols-2 sm:p-8">
                   <div className="rounded-xl bg-neutral-50 p-5">
                     <p className="text-sm font-semibold text-neutral-600">
-                      Número de expediente
+                      DNI del solicitante
                     </p>
                     <p className="mt-2 font-heading text-xl font-extrabold tracking-wide text-primary">
-                      EXP2026-00123
+                      {consultaTramiteDemo.dni}
                     </p>
                   </div>
                   <div className="rounded-xl bg-neutral-50 p-5">
                     <p className="text-sm font-semibold text-neutral-600">Estado actual</p>
                     <p className="mt-2 text-lg font-extrabold text-neutral-900">
-                      En Audiencia
+                      {consultaTramiteDemo.estado}
                     </p>
+                    <p className="mt-2 text-sm text-neutral-600">Pre-registro recibido el {consultaTramiteDemo.fecha}</p>
                   </div>
                 </div>
               </section>
@@ -208,20 +181,20 @@ function ConsultaEstadoPage() {
                     <FileText aria-hidden="true" className="h-5 w-5" />
                   </span>
                   <h2 className="text-xl font-extrabold text-neutral-900">
-                    Progreso del expediente
+                    Progreso del trámite
                   </h2>
                 </div>
 
                 <div className="mt-7">
-                  <ProgressBar current={3} label="Estado" total={4} />
+                  <ProgressBar current={consultaTramiteDemo.etapa} label="Estado" total={4} />
                 </div>
 
                 <div className="mt-6 overflow-x-auto pb-2">
                   <ol className="grid min-w-[620px] grid-cols-4">
                     {processStates.map((state, index) => {
                       const stateNumber = index + 1
-                      const isCurrent = stateNumber === 3
-                      const isComplete = stateNumber < 3
+                      const isCurrent = stateNumber === consultaTramiteDemo.etapa
+                      const isComplete = stateNumber < consultaTramiteDemo.etapa
 
                       return (
                         <li className="relative flex flex-col items-center text-center" key={state}>
@@ -264,7 +237,7 @@ function ConsultaEstadoPage() {
                     Historial del trámite
                   </h2>
                   <div className="mt-7">
-                    <StatusTimeline items={timelineItems} />
+                    <StatusTimeline items={consultaTramiteDemo.historial} />
                   </div>
                 </section>
 
@@ -272,40 +245,57 @@ function ConsultaEstadoPage() {
                   <section className="rounded-2xl border border-accent/30 bg-accent-light p-6 shadow-sm sm:p-7">
                     <div className="flex items-center gap-3 text-amber-900">
                       <MessageSquareText aria-hidden="true" className="h-6 w-6" />
-                      <h2 className="text-lg font-extrabold">Mensaje de la abogada</h2>
+                      <h2 className="text-lg font-extrabold">Mensaje de la Oficina de Divorcios</h2>
                     </div>
                     <blockquote className="mt-4 text-base leading-7 text-neutral-800">
-                      “Sus documentos están correctos. Debe acercarse a Mesa de
-                      Partes el día 15/05/2026 a las 9:00 AM.”
+                      {consultaTramiteDemo.mensaje}
                     </blockquote>
                   </section>
 
                   <section className="rounded-2xl border border-neutral-200 bg-white p-6 text-center shadow-sm sm:p-7">
                     <Download aria-hidden="true" className="mx-auto h-8 w-8 text-primary" />
                     <h2 className="mt-3 text-lg font-extrabold text-neutral-900">
-                      Citación de audiencia
+                      Constancia de pre-registro
                     </h2>
                     <p className="mt-2 text-sm leading-6 text-neutral-600">
-                      Descargue el documento simulado de su próxima audiencia.
+                      Consulte la constancia referencial de recepción de su solicitud.
                     </p>
-                    <button
+                    <a
                       className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 font-bold text-white transition hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-primary-light"
-                      onClick={() =>
-                        setCitationMessage('Citación preparada para descarga (simulación).')
-                      }
-                      type="button"
+                      href="/EJEMPLO.pdf"
+                      download="Constancia-de-pre-registro-ejemplo.pdf"
                     >
                       <Download aria-hidden="true" className="h-5 w-5" />
-                      Descargar citación
-                    </button>
-                    {citationMessage && (
-                      <p className="mt-3 text-sm font-semibold text-leaf" role="status">
-                        {citationMessage}
-                      </p>
-                    )}
+                      Descargar constancia
+                    </a>
+                    <a className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-primary underline underline-offset-4" href="/EJEMPLO.pdf" target="_blank" rel="noopener noreferrer"><ExternalLink aria-hidden="true" className="h-4 w-4" />Ver constancia de ejemplo</a>
                   </section>
                 </div>
               </div>
+              <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+                <h2 className="text-xl font-extrabold text-neutral-900">Documentos presentados</h2>
+                <p className="mt-2 text-base leading-7 text-neutral-600">Revise los documentos de su pre-registro. Su recepción no implica que hayan sido validados.</p>
+                <ul className="mt-6 space-y-4">
+                  {consultaTramiteDemo.documentos.map((documento, index) => (
+                    <li className="overflow-hidden rounded-xl border border-neutral-200" key={documento}>
+                      <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+                        <div className="flex min-w-0 items-start gap-3">
+                          <FileText aria-hidden="true" className="mt-1 h-6 w-6 shrink-0 text-primary" />
+                          <div><h3 className="text-base font-bold leading-6 text-neutral-900">{documento}</h3><p className="mt-1 text-sm text-neutral-600">PDF de ejemplo · Pendiente de revisión</p></div>
+                        </div>
+                        <div className="flex shrink-0 flex-wrap gap-3">
+                          <button aria-expanded={previewDocument === index} aria-controls={`consulta-documento-${index}`} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-primary px-4 py-2 text-sm font-bold text-primary hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary-light" onClick={() => setPreviewDocument((current) => current === index ? null : index)} type="button"><Eye aria-hidden="true" className="h-4 w-4" />{previewDocument === index ? 'Ocultar documento' : 'Ver documento'}</button>
+                          <a aria-label={`Descargar ejemplo de ${documento}`} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-neutral-200 px-4 py-2 text-sm font-bold text-neutral-800 hover:bg-neutral-50" href="/EJEMPLO.pdf" download="Documento-de-ejemplo.pdf"><Download aria-hidden="true" className="h-4 w-4" />Descargar</a>
+                        </div>
+                      </div>
+                      {previewDocument === index && <div className="requirements-fade-in border-t border-neutral-200 bg-neutral-50" id={`consulta-documento-${index}`}>
+                        <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-3"><p className="text-sm text-neutral-600">Muestra referencial: EJEMPLO.pdf</p><a className="inline-flex min-h-11 items-center gap-2 text-sm font-bold text-primary underline" href="/EJEMPLO.pdf" target="_blank" rel="noopener noreferrer"><ExternalLink aria-hidden="true" className="h-4 w-4" />Abrir PDF</a></div>
+                        <object aria-label={`Vista previa de ${documento}`} className="block h-[450px] w-full bg-white sm:h-[600px]" data="/EJEMPLO.pdf#view=FitH" type="application/pdf"><p className="p-6 text-center text-neutral-600">Puede visualizar el documento mediante el enlace “Abrir PDF”.</p></object>
+                      </div>}
+                    </li>
+                  ))}
+                </ul>
+              </section>
             </div>
           )}
 
