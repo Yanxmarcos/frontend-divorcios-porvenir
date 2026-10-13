@@ -1,0 +1,107 @@
+{
+  "source": "3-con-el-inge-sistemas.mp3",
+  "model": "faster-whisper large-v3-turbo int8",
+  "language": "es",
+  "duration": 355.7735,
+  "review": "Transcripción automática; no identifica hablantes; revisar cifras y términos técnicos.",
+  "segments": [
+    {
+      "start": 0.08,
+      "end": 30.38,
+      "text": "Lo que sí, justamente donde sí quiero obligación, es decir, el del seguimiento. Su seguimiento ustedes lo han puesto solamente con un número de NI, eso sí no está bien. Eso sí no está bien. ¿Qué cosas no he visto? ¿Qué cosas se suele hacer, por ejemplo? Lo más normal es que se vea un... Cuando a veces uno ve en sistemas ya, este, más...",
+      "avg_logprob": -0.21896724488543368,
+      "no_speech_prob": 9.048128565836144e-12
+    },
+    {
+      "start": 31.5,
+      "end": 59.62,
+      "text": "Por así decirlo, más estrictos, uno le pide ese código, ¿no? Uno registra y te dan un código, es más, tienes que acordarte ese código, porque si no te acuerdas ese código y la clave a veces, por ejemplo, cuando, estoy hablando de otras entidades públicas, ¿ya? Uno hace un trámite y te dan un código y una clave, y sin ese código y una clave uno no puede acceder, ¿no? Obviamente si es que, digo, uno puede llamar y...",
+      "avg_logprob": -0.12084561192299709,
+      "no_speech_prob": 8.11534433403649e-12
+    },
+    {
+      "start": 59.62,
+      "end": 87.62,
+      "text": "autentificarse y decirles, me olvidaba, pero lo normal es usuario y clave. Nosotros no vamos a ser tan estrictos en ese aspecto, pero tampoco podemos ser tan relajados en poner simplemente el número de TI porque cualquiera podría hacerlo. Algo más, podría ser, por ejemplo, cuando uno hace solicitud pone ahí su número de teléfono, número de dirección,",
+      "avg_logprob": -0.25853156264532695,
+      "no_speech_prob": 1.3226325416837437e-11
+    },
+    {
+      "start": 87.62,
+      "end": 116.75,
+      "text": "Lo que sea, podrían preguntar algo así, mira, coloca tu número de envío, coloca el correo que has puesto, ¿no? Algo que verifique que sí, efectivamente es eso, pero a la vez que no le des algo que tenga que anotar porque se va a olvidar la persona. Algo así. Tampoco la información no es tan, este, confidencial como para meterte verificaciones en los pasos o cosas así, pero tampoco queremos que sea pública. Es un intermedio.",
+      "avg_logprob": -0.13965018883995386,
+      "no_speech_prob": 1.4877826401415994e-11
+    },
+    {
+      "start": 117.14,
+      "end": 142.66,
+      "text": "Eso es lo más joven. Sobre todo, ¿por qué? Porque en algún momento, en su sal, en su registro, según he visto en su base de datos, hay una especie de verificación. Entonces, si hay una verificación y hay observaciones, se debe poder corregir esas observaciones, si no me equivoco.",
+      "avg_logprob": -0.15597270972825386,
+      "no_speech_prob": 1.625145330808042e-11
+    },
+    {
+      "start": 142.66,
+      "end": 157.97,
+      "text": "¿Sabes cómo hemos considerado? Porque hay varias estrategias, una de ellas es decir, ¿sabes qué? Tu pre-registro está mal, simplemente te notifico que está mal, hazlo de nuevo. Esa es una estrategia, creo. Pero lo más recomendable sería poder decir, ¿sabes qué?",
+      "avg_logprob": -0.14777666052182514,
+      "no_speech_prob": 1.1149692280554291e-11
+    },
+    {
+      "start": 157.97,
+      "end": 184.32,
+      "text": "Simplemente subsana esto. Claro, subsánalo para continuar. En ese caso, con mayor razón, ahí debería ser solamente modificable por la persona que ha hecho el trámite. Algo tienen que darle para que nadie más que esa persona pueda. Ahí tienen que ser creativos.",
+      "avg_logprob": -0.27858465956524014,
+      "no_speech_prob": 1.2689916825681102e-11
+    },
+    {
+      "start": 184.32,
+      "end": 213.18,
+      "text": "O la verdad, su docente lo considera que, no, sí, tienen que darle una clave porque de lo contrario es muy inseguro. Eso a veces es la opinión del docente también. A veces el docente es un tema de seguridad y no saben qué, eso también es seguro. Tienen que darle una clave, cosas así. De hecho, hay algunos docentes que de inmediato piensan en un tema de verificación con correo o cosas así.",
+      "avg_logprob": -0.1258816333044143,
+      "no_speech_prob": 1.1064120106207831e-11
+    },
+    {
+      "start": 213.18,
+      "end": 238.46,
+      "text": "Si es que él les dijera a esos jóvenes, no traten de confrontarlos a este, no, digamos. Ah, bueno, al final de cuentas, el que le va a poner un auto es él. No pasa, no pasa, no hay problema. No es tanto nuestra realidad, pero como ustedes están presentando el tema de la universidad, este, su docente se considera que es eso, lo hacen, no hay problema. Esos jóvenes.",
+      "avg_logprob": -0.306688803495193,
+      "no_speech_prob": 1.3120105696318163e-11
+    },
+    {
+      "start": 238.46,
+      "end": 263.58,
+      "text": "Porque si inicialmente nuestra idea es eso, crear el mismo sistema, crear el usuario y la contraseña para las personas. Y es lo más común, pero la realidad de la realidad es darles más problemas y más trabajo porque la persona se va a olvidar y va a venir acá. La va a venir acá el domingo. La va a venir acá. Exacto. Entonces, ¿no? Esa idea es nuestra experiencia, no es como utilidad pública.",
+      "avg_logprob": -0.25591922589022703,
+      "no_speech_prob": 1.261064516699939e-11
+    },
+    {
+      "start": 263.58,
+      "end": 286.43,
+      "text": "en nuestros usuarios. Nosotros conocemos a nuestros usuarios y sabemos que la rentidad pública no puede discriminar, tú tienes que apoyarla, que sea más rápido. Ellos que estén más cómodos pasando el trámite, porque no es un trámite bonito. Y dos, que tampoco pues...",
+      "avg_logprob": -0.30809977080892115,
+      "no_speech_prob": 1.7516949696316786e-11
+    },
+    {
+      "start": 286.43,
+      "end": 315.22,
+      "text": "Como todo sistema, facilidad también a los usuarios internos, que somos nosotros, que menos gente puede hacer, que estén preguntando. También da facilidad, menos tiempo. Tal vez incluso necesito una persona menos, porque ya es más fácil, ¿no? Esos momentos. Pero a medida que vengan a empezar a presentar a esos docentes, me dijeron, ¿no? Sí. Entonces también tener en cuenta sus...",
+      "avg_logprob": -0.3441281707663285,
+      "no_speech_prob": 1.1659353170434539e-11
+    },
+    {
+      "start": 315.22,
+      "end": 347.98,
+      "text": "un poco explíquenme en nuestro caso pero si es que no, en su punto de vista como gente tiene que hacer cambios, ¿sabes? hay problemas ¿algo más?",
+      "avg_logprob": -0.41400855992521557,
+      "no_speech_prob": 2.3267629142842416e-11
+    },
+    {
+      "start": 347.98,
+      "end": 355.77,
+      "text": "Gracias.",
+      "avg_logprob": -0.6417576471964518,
+      "no_speech_prob": 2.1421756729589347e-11
+    }
+  ]
+}

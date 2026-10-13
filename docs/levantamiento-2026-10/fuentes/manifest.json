@@ -1,0 +1,109 @@
+{
+  "fecha_encargo": "2026-10-06",
+  "timezone": "America/Lima",
+  "nota": "Evidencias locales; no publicar las grabaciones ni usar conversaciones como fixtures. Transcripción automática sin diarización ni certificación humana.",
+  "sources": [
+    {
+      "file": "6-foto-de-la-abogada.jpeg",
+      "source": "C:\\Users\\Marcos\\Downloads\\MUNICIPALIDAD\\6-foto-de-la-abogada.jpeg",
+      "bytes": 129866,
+      "sha256": "a9b2f3b7fb3245e8bf63bc762c828a2aac5927173b589d9d6d0cdffa4b033ca7"
+    },
+    {
+      "file": "F01-separacion.pdf",
+      "source": "https://drive.google.com/file/d/1naNpHB1EoRyaA2vcdwe3JBLPSrpBMDHo/view",
+      "bytes": 735714,
+      "sha256": "b6180da4a1b66ed283d6a830981da8ab62d8cfafe0a15f412ac9b2601c1e5cdb"
+    },
+    {
+      "file": "F02-domicilio.pdf",
+      "source": "https://drive.google.com/file/d/1ndZuXHJef2UeflJ2Sw9hjljImlKyZvQv/view",
+      "bytes": 607529,
+      "sha256": "c1c6048cdc3e9dfd44b7af96db05e303e99ea5cff608856c19693fbd8713bfab"
+    },
+    {
+      "file": "F03-sin-menores.pdf",
+      "source": "https://drive.google.com/file/d/1W5ncWNMXgKHda1v7aBAi2oSILFEV8W5I/view",
+      "bytes": 604580,
+      "sha256": "660c32a8f5018fad0161abdd693b7d1e3cd35779bea5f840703165d65b8cfcb5"
+    },
+    {
+      "file": "F04-sin-mayores-incapacidad.pdf",
+      "source": "https://drive.google.com/file/d/1C_HtC_C9LxMeH3PdzS7IjJSf-YJt3Ik7/view",
+      "bytes": 602951,
+      "sha256": "cc147b13654b4ced41f442c70683ad3a0a41a399ad13f37e66e01f521b8506fb"
+    },
+    {
+      "file": "F05-sin-bienes.pdf",
+      "source": "https://drive.google.com/file/d/182rATmWUQmjeF0u9FWkkV_es1HtkzzUL/view",
+      "bytes": 606066,
+      "sha256": "0cbe2210f7ff1cd5fe19e970748f8a0e5a8cb1c2115daa4d1c64ad6627641ad5"
+    },
+    {
+      "file": "F06-disolucion.pdf",
+      "source": "https://drive.google.com/file/d/1mWAIF__M1sv6sTbrVwHEUbl4rvdTwKcd/view",
+      "bytes": 604831,
+      "sha256": "6819b4c56231c633311a9b64b0d15cf7048835ff468103c0af2da22de960e32f"
+    },
+    {
+      "file": "Puntos-a-preguntar-por-nosotros-como-equipo.txt",
+      "source": "C:\\Users\\Marcos\\Downloads\\MUNICIPALIDAD\\Puntos-a-preguntar-por-nosotros-como-equipo.txt",
+      "bytes": 325,
+      "sha256": "9c377f869ff2241af3cda47d8eae4848ded2c19527c0333134ca95ec8c3b7c15"
+    },
+    {
+      "file": "0-abogada.mp3",
+      "source": "C:\\Users\\Marcos\\Downloads\\MUNICIPALIDAD\\0-abogada.mp3",
+      "transcript": "../transcripciones/0-abogada.md",
+      "durationSeconds": 76.1135,
+      "model": "faster-whisper large-v3-turbo int8",
+      "bytes": 911373,
+      "sha256": "e4aeae81f945395966d8085d5e66e43262e7f56c5cfe11b1e1a65be5c90833c6"
+    },
+    {
+      "file": "1-con-el-inge-sistemas.mp3",
+      "source": "C:\\Users\\Marcos\\Downloads\\MUNICIPALIDAD\\1-con-el-inge-sistemas.mp3",
+      "transcript": "../transcripciones/1-con-el-inge-sistemas.md",
+      "durationSeconds": 431.1335,
+      "model": "faster-whisper large-v3-turbo int8",
+      "bytes": 5152293,
+      "sha256": "8b027eaf244d38b84317a68ea39e1f09ffefa362a5b44a5da431acf13ab797d6"
+    },
+    {
+      "file": "2-con-el-inge-sistemas.mp3",
+      "source": "C:\\Users\\Marcos\\Downloads\\MUNICIPALIDAD\\2-con-el-inge-sistemas.mp3",
+      "transcript": "../transcripciones/2-con-el-inge-sistemas.md",
+      "durationSeconds": 190.7735,
+      "model": "faster-whisper large-v3-turbo int8",
+      "bytes": 2287221,
+      "sha256": "edff8972fb531416c58ec288f37a9feb66daf65743e12598ac41974c3d83a6de"
+    },
+    {
+      "file": "3-con-el-inge-sistemas.mp3",
+      "source": "C:\\Users\\Marcos\\Downloads\\MUNICIPALIDAD\\3-con-el-inge-sistemas.mp3",
+      "transcript": "../transcripciones/3-con-el-inge-sistemas.md",
+      "durationSeconds": 355.7735,
+      "model": "faster-whisper large-v3-turbo int8",
+      "bytes": 4342893,
+      "sha256": "cd84a2c0a5017770436efb7a7b6afe5a1704249ecbc5daeb1b8de53bca169d1c"
+    },
+    {
+      "file": "4-con-abogada.mp3",
+      "source": "C:\\Users\\Marcos\\Downloads\\MUNICIPALIDAD\\4-con-abogada.mp3",
+      "transcript": "../transcripciones/4-con-abogada.md",
+      "durationSeconds": 151.9735,
+      "model": "faster-whisper large-v3-turbo int8",
+      "bytes": 1891653,
+      "sha256": "353b449453d04562400f2829fe4ae3b1ecd0fb8c34c10164c3a61c24a1025f71"
+    },
+    {
+      "file": "5-con-abogada.mp3",
+      "source": "C:\\Users\\Marcos\\Downloads\\MUNICIPALIDAD\\5-con-abogada.mp3",
+      "transcript": "../transcripciones/5-con-abogada.md",
+      "durationSeconds": 763.6535,
+      "model": "faster-whisper large-v3-turbo int8",
+      "bytes": 9293469,
+      "sha256": "240281fceaf80cb0f0e09daea466cf7f4047bb78d68c99600a46d108551bb103"
+    }
+  ]
+}
