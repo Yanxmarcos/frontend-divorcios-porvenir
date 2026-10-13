@@ -1,0 +1,51 @@
+{
+  "source": "4-con-abogada.mp3",
+  "model": "faster-whisper large-v3-turbo int8",
+  "language": "es",
+  "duration": 151.9735,
+  "review": "Transcripción automática; no identifica hablantes; revisar cifras y términos técnicos.",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 32.88,
+      "text": "Ahí ya ponen el documento de ejemplo, eso nos faltaría todavía, un documento de ejemplo, en cada uno.",
+      "avg_logprob": -0.32517463631100124,
+      "no_speech_prob": 1.473684022035293e-11
+    },
+    {
+      "start": 32.88,
+      "end": 63.34,
+      "text": "Ahí se puede desagregarle en el acta de matrimonio, entre paréntesis, tres meses, porque tiene una validez de tres meses más. Lo que sí tengo dudas, ¿se puede, por ejemplo, en caso de una pareja, se ha casado en Esperanza?",
+      "avg_logprob": -0.20195070202603485,
+      "no_speech_prob": 1.0917932356802051e-11
+    },
+    {
+      "start": 63.34,
+      "end": 83.55,
+      "text": "Luego ha venido a vivir acá en el porvenir. ¿Cómo puede casar? ¿Cómo ha vivido? ¿Se ha casado en dónde? En Esperanza. Luego ha venido a vivir acá en el porvenir. Uno de los requisitos es que se haya casado en el porvenir o que tenga un último domicilio para vivir en el porvenir. Cualquiera de esos dos. Y si tiene amigos también.",
+      "avg_logprob": -0.16118927924863755,
+      "no_speech_prob": 2.0724888818990372e-11
+    },
+    {
+      "start": 83.55,
+      "end": 106.42,
+      "text": "¿Y si no lo tiene? O sea, si ha casado en otro distrito, tiene que tener un último domicilio conyugal por venir. Si no tiene, se va a Trujillo, digo eso. Y hay un tema de pagos también, creo, ¿no? Ajá, sí. ¿Y hay dos pagos en qué momento se hacen? Se hace... Si quieren, puede hacerlo todo junto. Ya.",
+      "avg_logprob": -0.13960623805240918,
+      "no_speech_prob": 1.0343625261866052e-11
+    },
+    {
+      "start": 106.42,
+      "end": 133.81,
+      "text": "Y si no, también se le da la facilidad de pagarlo en dos cuotas. La primera, que es cuando se ingresan los documentos, que primero nosotros los revisamos. Y la segunda, que después de dos meses de haber ingresado los documentos. ¿Y de cuánto se pago ahí? Es de 452. El primero es de 272 y el segundo es de 378.60. O sea, pagando la primera parte, por decirlo, ya pasa. Sí, pero si usted también puede pagarlo todo.",
+      "avg_logprob": -0.12378286008360022,
+      "no_speech_prob": 8.102274060006742e-12
+    },
+    {
+      "start": 137.68,
+      "end": 151.97,
+      "text": "¿Han consignado el pago también al inicio?",
+      "avg_logprob": -0.2378668427467346,
+      "no_speech_prob": 6.094787435156901e-12
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "source": "2-con-el-inge-sistemas.mp3",
+  "model": "faster-whisper large-v3-turbo int8",
+  "language": "es",
+  "duration": 190.7735,
+  "review": "Transcripción automática; no identifica hablantes; revisar cifras y términos técnicos.",
+  "segments": [
+    {
+      "start": 1.9,
+      "end": 38.83,
+      "text": "y me estoy visitando y me parece bien en qué estado está su trámite y acá ya se encargaría la interfaz de la duda para que pueda revisar los documentos y darle a una observación en el caso de este observado acá parece bien cuando está observado, está mal, etc. si está todo bien ya se podría acercar",
+      "avg_logprob": -0.33950675278902054,
+      "no_speech_prob": 2.32310629066923e-11
+    },
+    {
+      "start": 39.09,
+      "end": 82.58,
+      "text": "Bueno, a ver, algunas opiniones con respecto a lo que han hecho es que el registro",
+      "avg_logprob": -0.3259788808368501,
+      "no_speech_prob": 1.6791630585988315e-11
+    },
+    {
+      "start": 82.58,
+      "end": 111.76,
+      "text": "Es un poco raro el hecho de que validen ahí el tema de la dirección. Perdón, la dirección. Que ahí apliquen el validar con los tres últimos caracteres de la dirección. Porque normalmente nadie valida ese punto. Porque cualquier tipo de aplicaciones siempre te dice regístrate con tu DNI.",
+      "avg_logprob": -0.19748456671204365,
+      "no_speech_prob": 8.296086907721989e-12
+    },
+    {
+      "start": 111.76,
+      "end": 138.83,
+      "text": "Tú pon tu nombre y apellido, coloca tu dirección, tu teléfono y todo esos datos. Esas empresas tienen forma de sacar esos datos de Renek, pero no lo ponen uno porque, obviamente, les decía que para empresas privadas es un costo por consultar Renek, no es gratis. Y lo otro es de que hasta ese momento a mí no me importa, la verdad, obtener esos datos.",
+      "avg_logprob": -0.21241747733691466,
+      "no_speech_prob": 8.331385928372903e-12
+    },
+    {
+      "start": 139.41,
+      "end": 169.65,
+      "text": "Porque aún es un preregistro. A este punto aún no me interesa consultar su información para obtener sus datos. Si yo les digo que llenen sus nombres y apellidos, ¿qué llenen? Porque a ese punto más bien me sirve como confirmación de que en realidad están escribiendo bien su DNI, pero puede que se equivocen al tipear su DNI y me pongan otra cosa.",
+      "avg_logprob": -0.12175649301485812,
+      "no_speech_prob": 6.765965825800135e-12
+    },
+    {
+      "start": 170.42,
+      "end": 190.77,
+      "text": "Pero al menos por el nombre de apellido ya sé de quién se trata. Podría ser. Pero por ahí va un poco joven, porque ese tema de la consulta de DNI, por lo general no ocurre en principio. Aunque sí hay víctimas de empresas de transporte que les gusta que cuentan su DNI pidiendo los nombres y apellidos, es un base de datos.",
+      "avg_logprob": -0.2793205414695301,
+      "no_speech_prob": 2.414593872068771e-11
+    }
+  ]
+}

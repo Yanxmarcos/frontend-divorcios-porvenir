@@ -1,33 +1,42 @@
-# 🏛️ Frontend Divorcios - Municipalidad de El Porvenir
+# Frontend de separación y divorcio — El Porvenir
 
-Aplicación web frontend desarrollada para la **Municipalidad del Porvenir**, orientada a la gestión y tramitación de procesos de divorcio de manera digital, eficiente y accesible.
+Demostración funcional del portal ciudadano y del panel jurídico. Trabaja con datos ficticios y sirve como referencia funcional para los futuros endpoints .NET.
 
----
+## Ejecutar
 
-## 📋 Descripción
+```bash
+npm install
+npm run dev
+```
 
-Este proyecto corresponde al **frontend** del sistema de Divorcios de la Municipalidad del Porvenir. Su objetivo es proporcionar una interfaz intuitiva y moderna para que los ciudadanos y el personal administrativo puedan gestionar solicitudes, documentación y seguimiento de trámites de divorcio.
+Comprobaciones:
 
----
+```bash
+npm test
+npm run lint
+npm run build
+```
 
-## Equipo
+Acceso interno: `abogada@demo.test` / `Municipal2026`.
 
-| Integrante | GitHub |
-|-----------|--------|
-| **Chan Vasquez Yanxmarcos** | [@Yanxmarcos](https://github.com/yanxmarcos) |
-| **Chacon Reyes Jose Alberto** | [@Mbapeint](https://github.com/Mbapeint) |
-| **Albitres Cieza Rodrigo** | [@Manrodacc](https://github.com/Manrodacc) |
-| **Avila Zamudio Eliaser** | [@Desconocido-0](https://github.com/Desconocido-0) |
-| **Luis Bacilio Cesar** | [@cesarluis]() |
-| **Rodriguez Zavaleta Erick** | [@ErickRZ10](https://github.com/ErickRZ10) |
+Consulta ciudadana: `TRA-DEMO-2026-0001`, DNI `70112233`, correo `ana@example.test` y código `246810`.
 
----
+## Alcance
 
-## Tecnologías
+El estado se conserva en IndexedDB, incluidos los archivos cargados. Pre-registro, consulta, bandeja, detalle, pagos, audiencias, resoluciones, dashboard y reportes leen la misma fuente.
 
-- ⚛️ **React**
-- 🎨 **TailwindCSS**
-- 📜 **JavaScript**
-- 📦 **Vite** como empaquetador
+La aplicación simula revisión y subsanación, referencias municipales separadas SC/DU, pagos por etapa, audiencia presencial, resolución de separación, habilitación ulterior, resolución final y reporte mensual CSV. No se conecta con RENIEC, caja, Mesa de Partes, WhatsApp, correo, firma digital ni registros públicos.
 
----
+Las tarifas y códigos son valores demo pendientes de confirmación. El dossier completo está en [docs/levantamiento-2026-10/README.md](docs/levantamiento-2026-10/README.md).
+
+## Estructura
+
+- `src/domain/`: catálogos y reglas compartidas.
+- `src/services/mock/`: IndexedDB y escenarios iniciales.
+- `src/context/`: sesión y operaciones demo.
+- `src/pages/public/`: portal, pre-registro y consulta protegida.
+- `src/pages/admin/`: operaciones jurídicas.
+- `public/formats/`: seis formularios municipales.
+- `tests/`: pruebas de requisitos, pagos, agenda y privacidad.
+
+El historial del repositorio conserva la autoría del equipo. Esta implementación se realizó sobre la base auditada `99469d9`.

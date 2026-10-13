@@ -1,0 +1,20 @@
+# 1-con-el-inge-sistemas.mp3
+
+Transcripción automática; no identifica hablantes; revisar cifras y términos técnicos.
+
+Duración: 431.1 segundos.
+
+[00:00–00:29] También raro es que su flujo porque... porque él me valía al principio, no... es raro.
+[00:29–00:54] O sea, acá devuelven los... Karen, por favor me lo muestra. Ya, ¿sabes qué es ustedes jóvenes? Ahí es al contrario. Normalmente yo debería poder poner cualquier DNI, porque bueno, está igual, tal como les digo. Y lo que no debería hacer es devolverme los datos.
+[00:55–01:24] Es decir, al contrario, lo importante es salvaguardar la información que tenemos. Entonces, no debería devolverme los datos. Está verificado nada más y que no muestre nada, ¿no? Claro. Y ahí pasa la siguiente parte. Sí, sí, sí. Lo que no debe hacer también es mostrar mi información, ¿no? Porque qué tal si yo consigo la copia de mí de alguien más y yo pongo ahí, ¿no? Eso no es lo que se busca. Entonces, el tema de salvaguardar el proceso no es que esté autentificado, sino más bien es no mostrar los datos.
+[01:24–01:53] Eso es lo que me sirve a mí, pero ¿por qué necesito mostrarle a la persona que es un hombre y dónde vive? Más bien yo le pido su nueva dirección, ¿por qué? Porque casi nunca coincide la dirección de tu DNI con donde tú estás viviendo, porque a veces vivís en otro lado. Y la gente no actualiza, ¿no? Porque me voy a vivir un año en otro lado, me voy a ir a estar reuniendo a conversar mi información, no.
+[01:53–02:21] Por eso es que muchas veces tienen que regresar a su ciudad para votar, ahorita que estamos con las elecciones, porque tu dirección y tu DNI están en otro lado. Entonces, más bien, yo quiero saber tu nueva dirección. No, no te digas dónde está. Ok, es otro detalle.
+[02:21–02:45] Aquí no hemos pensado que también deberías ingresar el DNI del cónyuge. Ya, ya. Esa es la parte que pedimos. Hablamos con la señora Sita Bogada. A ver si es así. Pero bueno, si se ingresan y seguidamos el cónyuge, ¿no? Enseñar a Jorge 2, 2, 2, 2. En sus últimos días.
+[02:46–03:15] No sé si acá tampoco creo que le diga. Incluso aquí, en vez de poner datos del otro cónyuge, sería poner ambos datos, el cónyuge 1, el cónyuge 2, en caso de que el que está haciendo el perrequistro sea el representante. Por el resto de manera general, no sé de manera que lo hace uno o de dos partes, pero no como...
+[03:15–03:47] Ya, bueno, ingresa la fecha del matrimonio. La ubicación del homicidio conyugal. Y lugar del matrimonio.
+[03:47–04:17] que sería el porvenir, pero también según la página. O sea, pueden que sean de dedicación a su lugar, pero si viven en Colombia, pueden negociar en el proyecto. Entonces, ahí también hay que consultar a la hogar cómo se trabaja aquí. Si puede ir al porvenir o de cuál es el sitio. Pero aquí sí se le da eso. Entonces, dejamos los completos de la red de acá.
+[04:17–04:47] Aquí está la cantidad de hijos, esto va a depender de los documentos, o sea, depende de los documentos, el tiempo de documentos que va a ser. Lo voy a ir a la cantidad de hijos de 1, 2, 3, 4, más. Estos están en una página, puede ser el nombre de los hijos.
+[04:47–05:19] El tipo de hielo, y si uno está fuera de todo. Si uno está fuera del país, como visto, el que se registra un apoderado, o... Pero también, este, me quedamos mostrando en el hogar de este país. Como sería la falta, si es que uno está fuera del país. Y si uno está fuera del país, y si uno está fuera del país, lo que tendría que administrar es que... Como que está de acuerdo, ¿no? En matar a la falta. Como matar a los representantes. Así es ahí, este...
+[05:19–05:56] ya ya ya ya ya ya ya ya
+[05:56–06:32] El, este, ¿cómo se llama? ¿El documento puede ser? ¿La maquilla? ¿Listo? ¿Aca lo puede encargar o algo? Puede sumar, ¿no? Puede sumar, ¿no? Puede sumar, ¿no? Ya. Ah, ¿sí? Sí, la verdad fue el ingeniero, ¿sí? Sí, la verdad fue el ingeniero, ¿sí? Ah, pero si no funciona, tengo que sumar, ¿no? ¿Puedes como decirlo? Para llegar al final, ¿no? ¿Por qué dale?
+[06:32–06:54] la suerte igual tiene que previsualizarse para ver que ha subido para que vea que es el archivo correcto igual para este que es el archivo

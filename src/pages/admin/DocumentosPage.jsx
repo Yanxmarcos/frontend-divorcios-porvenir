@@ -1,1 +1,11 @@
-// TODO: Implementar la gestión de documentos.
+import { useMemo, useState } from 'react'
+import { Download, ExternalLink, FileCheck2, Search } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { useDemo } from '../../context/DemoContext'
+import { FORMS } from '../../domain/catalogs'
+
+export default function DocumentosPage() {
+  const { cases } = useDemo(); const [tab, setTab] = useState('expedientes'); const [query, setQuery] = useState('')
+  const docs = useMemo(() => cases.flatMap((item) => item.documents.map((doc) => ({ ...doc, case: item }))).filter((doc) => [doc.name, doc.case.trackingCode, doc.requirementCode].join(' ').toLowerCase().includes(query.toLowerCase())), [cases, query])
+  return <div className="page-stack"><nav className="tabs"><button className={tab === 'expedientes' ? 'active' : ''} onClick={() => setTab('expedientes')}>Documentos de expedientes</button><button className={tab === 'formatos' ? 'active' : ''} onClick={() => setTab('formatos')}>Formatos oficiales</button></nav>{tab === 'expedientes' ? <section className="panel"><label className="search-field document-search"><Search /><span className="sr-only">Buscar documentos</span><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar archivo, requisito o expediente" /></label><div className="table-wrap"><table><thead><tr><th>Archivo</th><th>Expediente</th><th>Requisito</th><th>Versión</th><th>Revisión</th></tr></thead><tbody>{docs.map((doc) => <tr key={doc.id}><td><strong>{doc.name}</strong><small>{(doc.bytes / 1024).toFixed(0)} KB</small></td><td><Link className="table-link" to={'/admin/expedientes/' + doc.case.id}>{doc.case.trackingCode}</Link></td><td>{doc.requirementCode}</td><td>{doc.versions}</td><td><span className={'review-state review-' + doc.reviewStatus.toLowerCase()}>{doc.reviewStatus}</span></td></tr>)}</tbody></table></div></section> : <section className="form-grid">{FORMS.map((form) => <article className="format-card" key={form.code}><span className="format-code">{form.code}</span><FileCheck2 /><h2>{form.title}</h2><p>{form.applies}</p><div><a className="btn btn-primary" href={form.file} target="_blank" rel="noreferrer"><ExternalLink /> Abrir</a><a className="btn btn-secondary" href={form.file} download><Download /> Descargar</a></div></article>)}</section>}</div>
+}

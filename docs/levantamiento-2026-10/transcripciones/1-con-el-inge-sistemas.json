@@ -1,0 +1,107 @@
+{
+  "source": "1-con-el-inge-sistemas.mp3",
+  "model": "faster-whisper large-v3-turbo int8",
+  "language": "es",
+  "duration": 431.1335,
+  "review": "Transcripción automática; no identifica hablantes; revisar cifras y términos técnicos.",
+  "segments": [
+    {
+      "start": 0.08,
+      "end": 29.3,
+      "text": "También raro es que su flujo porque... porque él me valía al principio, no... es raro.",
+      "avg_logprob": -0.6074227392673492,
+      "no_speech_prob": 1.1117602498333934e-11
+    },
+    {
+      "start": 29.3,
+      "end": 54.77,
+      "text": "O sea, acá devuelven los... Karen, por favor me lo muestra. Ya, ¿sabes qué es ustedes jóvenes? Ahí es al contrario. Normalmente yo debería poder poner cualquier DNI, porque bueno, está igual, tal como les digo. Y lo que no debería hacer es devolverme los datos.",
+      "avg_logprob": -0.2314658694797092,
+      "no_speech_prob": 2.471976269513565e-11
+    },
+    {
+      "start": 55.34,
+      "end": 84.86,
+      "text": "Es decir, al contrario, lo importante es salvaguardar la información que tenemos. Entonces, no debería devolverme los datos. Está verificado nada más y que no muestre nada, ¿no? Claro. Y ahí pasa la siguiente parte. Sí, sí, sí. Lo que no debe hacer también es mostrar mi información, ¿no? Porque qué tal si yo consigo la copia de mí de alguien más y yo pongo ahí, ¿no? Eso no es lo que se busca. Entonces, el tema de salvaguardar el proceso no es que esté autentificado, sino más bien es no mostrar los datos.",
+      "avg_logprob": -0.13643218861783252,
+      "no_speech_prob": 2.5492920274761133e-11
+    },
+    {
+      "start": 84.86,
+      "end": 113.81,
+      "text": "Eso es lo que me sirve a mí, pero ¿por qué necesito mostrarle a la persona que es un hombre y dónde vive? Más bien yo le pido su nueva dirección, ¿por qué? Porque casi nunca coincide la dirección de tu DNI con donde tú estás viviendo, porque a veces vivís en otro lado. Y la gente no actualiza, ¿no? Porque me voy a vivir un año en otro lado, me voy a ir a estar reuniendo a conversar mi información, no.",
+      "avg_logprob": -0.26441853325646203,
+      "no_speech_prob": 2.3900090240225325e-11
+    },
+    {
+      "start": 113.81,
+      "end": 141.34,
+      "text": "Por eso es que muchas veces tienen que regresar a su ciudad para votar, ahorita que estamos con las elecciones, porque tu dirección y tu DNI están en otro lado. Entonces, más bien, yo quiero saber tu nueva dirección. No, no te digas dónde está. Ok, es otro detalle.",
+      "avg_logprob": -0.25424326329991437,
+      "no_speech_prob": 1.826346018862779e-11
+    },
+    {
+      "start": 141.34,
+      "end": 165.26,
+      "text": "Aquí no hemos pensado que también deberías ingresar el DNI del cónyuge. Ya, ya. Esa es la parte que pedimos. Hablamos con la señora Sita Bogada. A ver si es así. Pero bueno, si se ingresan y seguidamos el cónyuge, ¿no? Enseñar a Jorge 2, 2, 2, 2. En sus últimos días.",
+      "avg_logprob": -0.49081577526198494,
+      "no_speech_prob": 1.3576321490627041e-11
+    },
+    {
+      "start": 166.67,
+      "end": 195.54,
+      "text": "No sé si acá tampoco creo que le diga. Incluso aquí, en vez de poner datos del otro cónyuge, sería poner ambos datos, el cónyuge 1, el cónyuge 2, en caso de que el que está haciendo el perrequistro sea el representante. Por el resto de manera general, no sé de manera que lo hace uno o de dos partes, pero no como...",
+      "avg_logprob": -0.3285342126407407,
+      "no_speech_prob": 3.376152482581496e-11
+    },
+    {
+      "start": 195.54,
+      "end": 227.1,
+      "text": "Ya, bueno, ingresa la fecha del matrimonio. La ubicación del homicidio conyugal. Y lugar del matrimonio.",
+      "avg_logprob": -0.36439080614792674,
+      "no_speech_prob": 1.5021645385915328e-11
+    },
+    {
+      "start": 227.1,
+      "end": 257.34,
+      "text": "que sería el porvenir, pero también según la página. O sea, pueden que sean de dedicación a su lugar, pero si viven en Colombia, pueden negociar en el proyecto. Entonces, ahí también hay que consultar a la hogar cómo se trabaja aquí. Si puede ir al porvenir o de cuál es el sitio. Pero aquí sí se le da eso. Entonces, dejamos los completos de la red de acá.",
+      "avg_logprob": -0.5865018906131867,
+      "no_speech_prob": 1.8476154634017306e-11
+    },
+    {
+      "start": 257.34,
+      "end": 287.47,
+      "text": "Aquí está la cantidad de hijos, esto va a depender de los documentos, o sea, depende de los documentos, el tiempo de documentos que va a ser. Lo voy a ir a la cantidad de hijos de 1, 2, 3, 4, más. Estos están en una página, puede ser el nombre de los hijos.",
+      "avg_logprob": -0.5077092001835505,
+      "no_speech_prob": 2.039826640931608e-11
+    },
+    {
+      "start": 287.92,
+      "end": 319.12,
+      "text": "El tipo de hielo, y si uno está fuera de todo. Si uno está fuera del país, como visto, el que se registra un apoderado, o... Pero también, este, me quedamos mostrando en el hogar de este país. Como sería la falta, si es que uno está fuera del país. Y si uno está fuera del país, y si uno está fuera del país, lo que tendría que administrar es que... Como que está de acuerdo, ¿no? En matar a la falta. Como matar a los representantes. Así es ahí, este...",
+      "avg_logprob": -0.5169213923715776,
+      "no_speech_prob": 3.5718233926118614e-11
+    },
+    {
+      "start": 319.95,
+      "end": 356.0,
+      "text": "ya ya ya ya ya ya ya ya",
+      "avg_logprob": -1.0769844055175781,
+      "no_speech_prob": 2.3431485918212758e-11
+    },
+    {
+      "start": 356.0,
+      "end": 392.66,
+      "text": "El, este, ¿cómo se llama? ¿El documento puede ser? ¿La maquilla? ¿Listo? ¿Aca lo puede encargar o algo? Puede sumar, ¿no? Puede sumar, ¿no? Puede sumar, ¿no? Ya. Ah, ¿sí? Sí, la verdad fue el ingeniero, ¿sí? Sí, la verdad fue el ingeniero, ¿sí? Ah, pero si no funciona, tengo que sumar, ¿no? ¿Puedes como decirlo? Para llegar al final, ¿no? ¿Por qué dale?",
+      "avg_logprob": -0.5451943142847582,
+      "no_speech_prob": 1.8906435444998593e-11
+    },
+    {
+      "start": 392.78,
+      "end": 414.77,
+      "text": "la suerte igual tiene que previsualizarse para ver que ha subido para que vea que es el archivo correcto igual para este que es el archivo",
+      "avg_logprob": -0.44919261739060684,
+      "no_speech_prob": 1.1202556243761208e-11
+    }
+  ]
+}

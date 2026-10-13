@@ -1,363 +1,41 @@
 import { useState } from 'react'
-import {
-  ArrowLeft,
-  CalendarPlus,
-  Download,
-  FileText,
-  MapPin,
-  MessageSquarePlus,
-  Phone,
-  RefreshCw,
-  UploadCloud,
-  UserRound,
-} from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
-import AdminHeader from '../../components/layout/AdminHeader.jsx'
-import AdminSidebar from '../../components/layout/AdminSidebar.jsx'
-import StatusTimeline from '../../components/shared/StatusTimeline.jsx'
-import Badge from '../../components/ui/Badge.jsx'
-import { expedientes } from '../../mock/expedientes.js'
+import { ArrowLeft, CalendarPlus, CheckCircle2, CircleAlert, FilePlus2, Landmark, MessageSquareText, ReceiptText, Scale } from 'lucide-react'
+import { useDemo } from '../../context/DemoContext'
+import { FEES, formatMoney, getRequirements } from '../../domain/catalogs'
+import StatusBadge from '../../components/shared/StatusBadge'
 
-const documents = [
-  { id: 'solicitud', name: 'Solicitud de separación convencional.pdf', size: '1.2 MB' },
-  { id: 'dni-ana', name: 'DNI del primer cónyuge.pdf', size: '840 KB' },
-  { id: 'dni-luis', name: 'DNI del segundo cónyuge.pdf', size: '815 KB' },
-  { id: 'matrimonio', name: 'Acta de matrimonio.pdf', size: '2.1 MB' },
-  { id: 'domicilio', name: 'Declaración de domicilio conyugal.pdf', size: '980 KB' },
-]
+const tabs = ['Resumen', 'Documentos', 'Pagos', 'Audiencias', 'Resoluciones', 'Historial']
+const Input = ({ label, ...props }) => <label>{label}<input {...props} /></label>
 
-const timelineItems = [
-  {
-    date: '01/09/2026',
-    description: 'Solicitud registrada correctamente',
-    status: 'complete',
-  },
-  {
-    date: '03/09/2026',
-    description: 'Documentos recibidos por Mesa de Partes',
-    status: 'complete',
-  },
-  {
-    date: '09/09/2026',
-    description: 'Expediente asignado para revisión legal',
-    status: 'current',
-  },
-  {
-    date: 'Pendiente',
-    description: 'Audiencia de ratificación',
-    status: 'pending',
-  },
-  {
-    date: 'Pendiente',
-    description: 'Resolución de admisibilidad',
-    status: 'pending',
-  },
-  {
-    date: 'Pendiente',
-    description: 'Disolución final',
-    status: 'pending',
-  },
-]
-
-const actionButtons = [
-  { label: 'Cambiar estado', icon: RefreshCw },
-  { label: 'Registrar audiencia', icon: CalendarPlus },
-  { label: 'Subir documento', icon: UploadCloud },
-]
-
-function ExpedienteDetallePage() {
+export default function ExpedienteDetallePage() {
   const { id } = useParams()
-  const caseData = expedientes.find((caseItem) => caseItem.id === id)
-  const [actionMessage, setActionMessage] = useState('')
+  const demo = useDemo()
+  const item = demo.cases.find((c) => c.id === id)
+  const [tab, setTab] = useState('Resumen')
+  const [reason, setReason] = useState({})
   const [note, setNote] = useState('')
-  const [officialNumber, setOfficialNumber] = useState('')
-  const [officialNumberInput, setOfficialNumberInput] = useState('')
-  const [officialNumberError, setOfficialNumberError] = useState('')
-  const [internalNotes, setInternalNotes] = useState([
-    {
-      author: 'Dra. María García',
-      date: '09/09/2026 · 10:20 AM',
-      text: 'Se inició la revisión de los documentos presentados.',
-    },
-  ])
+  if (!item) return <section className="panel empty-page"><h2>Expediente no encontrado</h2><Link to="/admin/expedientes">Volver a la bandeja</Link></section>
+  const requirements = getRequirements(item)
+  const balances = demo.balances(item)
+  const readyForPrecheck = requirements.every((req) => item.documents.some((doc) => doc.requirementCode === req.code && doc.reviewStatus === 'APPROVED'))
+  const doReference = (e) => { e.preventDefault(); const fd = new FormData(e.currentTarget); demo.registerReference(item.id, fd.get('stage'), fd.get('number'), fd.get('date')); e.currentTarget.reset() }
+  const doPayment = (e) => { e.preventDefault(); const fd = new FormData(e.currentTarget); const amount = Math.round(Number(fd.get('amount')) * 100); const stage = fd.get('stage'); demo.registerPayment(item.id, { receiptNumber: fd.get('receipt'), paidOn: fd.get('date'), totalMinor: amount, allocatedSC: stage === 'SC' ? amount : 0, allocatedDU: stage === 'DU' ? amount : 0 }); e.currentTarget.reset() }
+  const doResolution = (e) => { e.preventDefault(); const fd = new FormData(e.currentTarget); demo.issueResolution(item.id, fd.get('type'), { number: fd.get('number'), issuedOn: fd.get('issuedOn'), notifiedOn: fd.get('notifiedOn') }); e.currentTarget.reset() }
+  return <div className="page-stack">
+    <div className="case-header"><Link className="back-link" to="/admin/expedientes"><ArrowLeft /> Bandeja</Link><div className="case-title-row"><div><p className="eyebrow">{item.trackingCode}</p><h2>{item.spouses.map((p) => p.names.replace('Persona Demo ', '')).join(' y ')}</h2><div className="case-meta"><span>Etapa <b>{item.stage}</b></span><span>Revisión <b>{item.revision}</b></span><span>Responsable <b>{item.assignedTo}</b></span></div></div><StatusBadge status={item.status} /></div>{item.status === 'OBSERVED' && <div className="priority-alert"><CircleAlert /><div><strong>El ciudadano debe subsanar {item.observations.filter((o) => o.status === 'OPEN').length} observación(es).</strong><span>Las correcciones conservarán este mismo caso y el historial de versiones.</span></div></div>}</div>
+    <nav className="tabs" aria-label="Secciones del expediente">{tabs.map((name) => <button key={name} onClick={() => setTab(name)} className={tab === name ? 'active' : ''}>{name}</button>)}</nav>
 
-  const addNote = () => {
-    const cleanNote = note.trim()
-    if (!cleanNote) return
+    {tab === 'Resumen' && <div className="detail-grid"><section className="panel"><div className="panel-heading"><div><p className="eyebrow">Personas</p><h3>Solicitantes y contacto</h3></div></div><div className="person-cards">{item.spouses.map((p, index) => <article key={p.id}><span>Cónyuge {index + 1}</span><strong>{p.names}</strong><dl><dt>DNI</dt><dd>{p.documentNumber}</dd><dt>Domicilio actual</dt><dd>{p.address}</dd><dt>Contacto</dt><dd>{p.phone}<br />{p.email}</dd></dl></article>)}</div><div className="info-grid"><div><span>Matrimonio</span><strong>{item.marriage.date}</strong><small>{item.marriage.district}</small></div><div><span>Último domicilio conyugal</span><strong>{item.marriage.lastMaritalAddress}</strong></div><div><span>Hijos menores</span><strong>{item.family.hasMinors ? 'Sí' : 'No'}</strong></div><div><span>Bienes sociales</span><strong>{item.property.hasCommunityAssets ? 'Sí' : 'No'}</strong></div></div></section><aside className="panel"><div className="panel-heading"><div><p className="eyebrow">Mesa de Partes</p><h3>Referencias oficiales</h3></div></div>{item.officialReferences.length ? <div className="reference-list">{item.officialReferences.map((r) => <div key={r.id}><span>{r.stage}</span><strong>{r.number}</strong><small>Ingresado {r.receivedAt}</small></div>)}</div> : <p className="empty-inline">Todavía no existe número municipal.</p>}<form className="compact-form" onSubmit={doReference}><label>Etapa<select name="stage" defaultValue={item.stage}><option>SC</option><option>DU</option></select></label><Input label="Número municipal" name="number" required placeholder="EXP-2026-0000" /><Input label="Fecha de ingreso" name="date" type="date" required /><button className="btn btn-primary" type="submit"><Landmark /> Registrar referencia</button></form></aside></div>}
 
-    setInternalNotes((currentNotes) => [
-      {
-        author: 'Dra. María García',
-        date: '09/09/2026 · Ahora',
-        text: cleanNote,
-      },
-      ...currentNotes,
-    ])
-    setNote('')
-    setActionMessage('Nota interna agregada correctamente.')
-  }
+    {tab === 'Documentos' && <section className="panel"><div className="panel-heading"><div><p className="eyebrow">Revisión documental</p><h3>{requirements.length} requisitos aplicables</h3></div>{readyForPrecheck && ['SUBMITTED', 'PRECHECK', 'OBSERVED'].includes(item.status) && <button className="btn btn-primary" onClick={() => demo.markReady(item.id)}><CheckCircle2 /> Marcar apto para presentar</button>}</div><div className="document-review-list">{requirements.map((req) => { const doc = item.documents.find((d) => d.requirementCode === req.code); return <article key={req.code}><div className="requirement-name"><span>{req.code}</span><div><strong>{req.title}</strong>{doc ? <small>{doc.name} · versión {doc.versions} · {(doc.bytes / 1024).toFixed(0)} KB</small> : <small>Documento no cargado</small>}</div></div>{doc && <div className="review-actions"><span className={'review-state review-' + doc.reviewStatus.toLowerCase()}>{doc.reviewStatus === 'APPROVED' ? 'Conforme' : doc.reviewStatus === 'OBSERVED' ? 'Observado' : 'Pendiente'}</span><input aria-label={'Motivo para ' + req.title} placeholder="Motivo si se observa" value={reason[doc.id] || ''} onChange={(e) => setReason({ ...reason, [doc.id]: e.target.value })} /><button className="btn btn-secondary btn-small" onClick={() => demo.reviewDocument(item.id, doc.id, 'APPROVED')}>Conforme</button><button className="btn btn-danger btn-small" disabled={!reason[doc.id]} onClick={() => demo.reviewDocument(item.id, doc.id, 'OBSERVED', reason[doc.id])}>Observar</button></div>}</article>})}</div></section>}
 
-  if (!caseData) {
-    return (
-      <div className="min-h-screen bg-neutral-50">
-        <AdminSidebar />
-        <div className="lg:pl-64">
-          <AdminHeader title="Expediente no encontrado" />
-          <main className="p-5 sm:p-8 lg:p-10">
-            <div className="mx-auto max-w-2xl rounded-2xl border border-neutral-200 bg-white p-10 text-center shadow-sm">
-              <FileText aria-hidden="true" className="mx-auto h-10 w-10 text-neutral-400" />
-              <h2 className="mt-4 text-2xl font-extrabold text-neutral-900">
-                No encontramos este expediente
-              </h2>
-              <Link
-                className="mt-6 inline-flex items-center gap-2 font-bold text-primary hover:text-primary-dark"
-                to="/admin/expedientes"
-              >
-                <ArrowLeft aria-hidden="true" className="h-4 w-4" />
-                Volver al listado
-              </Link>
-            </div>
-          </main>
-        </div>
-      </div>
-    )
-  }
+    {tab === 'Pagos' && <div className="detail-grid"><section className="panel"><div className="fee-summary"><div><span>Saldo separación</span><strong>{formatMoney(balances.SC)}</strong><small>Tarifa demo: {formatMoney(FEES.SC.amountMinor)}</small></div><div><span>Saldo divorcio ulterior</span><strong>{formatMoney(balances.DU)}</strong><small>Tarifa demo: {formatMoney(FEES.DU.amountMinor)}</small></div></div><div className="table-wrap"><table><thead><tr><th>Recibo</th><th>Fecha</th><th>Total</th><th>Asignación</th><th>Estado</th><th /></tr></thead><tbody>{item.payments.map((p) => <tr key={p.id}><td>{p.receiptNumber}</td><td>{p.paidOn}</td><td>{formatMoney(p.totalMinor)}</td><td>SC {formatMoney(p.allocatedSC)} · DU {formatMoney(p.allocatedDU)}</td><td>{p.status}</td><td>{p.status === 'PENDING' && <div className="row-actions"><button onClick={() => demo.reviewPayment(item.id, p.id, 'APPROVED')}>Validar</button><button onClick={() => demo.reviewPayment(item.id, p.id, 'OBSERVED')}>Observar</button></div>}</td></tr>)}</tbody></table></div></section><aside className="panel"><div className="panel-heading"><div><p className="eyebrow">Revisión humana simulada</p><h3>Registrar comprobante</h3></div></div><form className="compact-form" onSubmit={doPayment}><Input label="Número de recibo" name="receipt" required /><Input label="Fecha de pago" name="date" type="date" required /><Input label="Importe (S/)" name="amount" type="number" min="0.01" step="0.01" required /><label>Aplicar a<select name="stage"><option value="SC">Separación convencional</option><option value="DU">Divorcio ulterior</option></select></label><button className="btn btn-primary" type="submit"><ReceiptText /> Guardar para revisión</button></form></aside></div>}
 
-  return (
-    <div className="min-h-screen bg-neutral-50">
-      <AdminSidebar />
-      <div className="lg:pl-64">
-        <AdminHeader title="Detalle del expediente" />
+    {tab === 'Audiencias' && <section className="panel"><div className="panel-heading"><div><p className="eyebrow">Actuaciones presenciales</p><h3>Audiencias del expediente</h3></div><Link className="btn btn-primary" to={'/admin/audiencias?case=' + item.id}><CalendarPlus /> Programar audiencia</Link></div>{item.hearings.length ? <div className="timeline">{item.hearings.map((h) => <article key={h.id}><i /><time>{new Intl.DateTimeFormat('es-PE', { dateStyle: 'full', timeStyle: 'short' }).format(new Date(h.startsAt))}</time><strong>Convocatoria {h.callNumber} · {h.location}</strong><span>{h.result ? 'Resultado: ' + h.result : 'Pendiente de realizar'}</span>{h.status === 'SCHEDULED' && <div className="row-actions"><button onClick={() => demo.recordHearing(item.id, h.id, 'RATIFIED', 'Ambos presentes')}>Registrar ratificación</button><button onClick={() => demo.recordHearing(item.id, h.id, 'ABSENCE', 'Inasistencia')}>Registrar inasistencia</button></div>}</article>)}</div> : <p className="empty-page">Todavía no hay audiencias. Solo se programan después del ingreso oficial.</p>}</section>}
 
-        <main className="p-5 sm:p-8 lg:p-10">
-          <div className="mx-auto max-w-7xl">
-            <Link
-              className="inline-flex items-center gap-2 text-sm font-bold text-neutral-600 transition hover:text-primary"
-              to="/admin/expedientes"
-            >
-              <ArrowLeft aria-hidden="true" className="h-4 w-4" />
-              Volver a expedientes
-            </Link>
+    {tab === 'Resoluciones' && <div className="detail-grid"><section className="panel"><div className="panel-heading"><div><p className="eyebrow">Actos registrados</p><h3>Resoluciones</h3></div></div>{item.resolutions.length ? <div className="resolution-list">{item.resolutions.map((r) => <article key={r.id}><Scale /><div><span>Resolución {r.type}</span><strong>{r.number}</strong><small>Emitida {r.issuedOn}{r.notifiedOn && ' · notificada ' + r.notifiedOn}</small></div></article>)}</div> : <p className="empty-inline">No hay resoluciones emitidas.</p>}{item.status === 'SC_RESOLVED' && <button className="btn btn-secondary" onClick={() => demo.enableDU(item.id)}>Habilitar solicitud ulterior en demo</button>}</section><aside className="panel"><div className="panel-heading"><div><p className="eyebrow">Registro demo</p><h3>Adjuntar resolución emitida</h3></div></div><form className="compact-form" onSubmit={doResolution}><label>Tipo<select name="type" defaultValue={item.stage}><option>SC</option><option>DU</option></select></label><Input label="Número de resolución" name="number" required /><Input label="Fecha de emisión" name="issuedOn" type="date" required /><Input label="Fecha de notificación" name="notifiedOn" type="date" /><button className="btn btn-primary" type="submit"><FilePlus2 /> Registrar resolución</button></form></aside></div>}
 
-            <section className="mt-5 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
-              <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
-                <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.16em] text-neutral-600">
-                    Número de trámite interno
-                  </p>
-                  <div className="mt-2 flex flex-wrap items-center gap-3">
-                    <h2 className="font-heading text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl">
-                      {caseData.number}
-                    </h2>
-                    <Badge variant={caseData.variant}>{caseData.status}</Badge>
-                  </div>
-                  <p className="mt-3 text-sm text-neutral-600">
-                    Ingresado el {caseData.entryDate}
-                  </p>
-                </div>
-
-                <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                  {actionButtons.map(({ icon: Icon, label }, index) => (
-                    <button
-                      className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold transition focus:outline-none focus:ring-4 focus:ring-primary-light ${
-                        index === 0
-                          ? 'bg-primary text-white hover:bg-primary-dark'
-                          : 'border border-neutral-200 bg-white text-neutral-800 hover:border-primary hover:text-primary'
-                      }`}
-                      key={label}
-                      onClick={() => setActionMessage(`${label}: acción simulada correctamente.`)}
-                      type="button"
-                    >
-                      <Icon aria-hidden="true" className="h-4 w-4" />
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {actionMessage && (
-                <p
-                  className="mt-5 rounded-xl border border-green-200 bg-green-50 p-4 text-sm font-semibold text-leaf"
-                  role="status"
-                >
-                  {actionMessage}
-                </p>
-              )}
-            </section>
-
-            <div className="mt-6 grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-              <div className="space-y-6">
-                <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
-                  <h2 className="text-xl font-extrabold text-neutral-900">Expediente de Mesa de Partes</h2>
-                  <p className="mt-2 leading-7 text-neutral-600">El número de trámite identifica la solicitud internamente. Registre el número de expediente cuando Mesa de Partes lo asigne.</p>
-                  <p className="mt-4 rounded-lg bg-neutral-50 p-4 font-semibold text-neutral-800">{officialNumber || 'Pendiente de asignación por Mesa de Partes'}</p>
-                  <form className="mt-5" onSubmit={(event) => {
-                    event.preventDefault()
-                    if (!officialNumberInput.trim()) { setOfficialNumberError('Ingrese el número asignado por Mesa de Partes.'); return }
-                    setOfficialNumber(officialNumberInput.trim())
-                    setOfficialNumberInput('')
-                    setOfficialNumberError('')
-                  }}>
-                    <label className="block text-sm font-bold text-neutral-800" htmlFor="official-case-number">Número de expediente asignado por Mesa de Partes</label>
-                    <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-                      <input className="min-h-12 min-w-0 flex-1 rounded-xl border border-neutral-200 px-4 py-3 text-base focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary-light" id="official-case-number" maxLength={80} value={officialNumberInput} onChange={(event) => { setOfficialNumberInput(event.target.value); setOfficialNumberError('') }} placeholder="Ingrese el número asignado" />
-                      <button className="rounded-xl bg-primary px-5 py-3 font-bold text-white hover:bg-primary-dark" type="submit">{officialNumber ? 'Actualizar expediente' : 'Registrar expediente'}</button>
-                    </div>
-                    {officialNumberError && <p className="mt-2 text-sm text-primary" role="alert">{officialNumberError}</p>}
-                    <p className="mt-3 text-sm text-neutral-600">Registro simulado para la presentación; no se envía a Mesa de Partes.</p>
-                  </form>
-                </section>
-                <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
-                  <div className="flex items-center gap-3">
-                    <UserRound aria-hidden="true" className="h-6 w-6 text-primary" />
-                    <h2 className="text-xl font-extrabold text-neutral-900">Datos de los cónyuges</h2>
-                  </div>
-
-                  <div className="mt-6 grid gap-4 md:grid-cols-2">
-                    {caseData.spouses.map((spouse, index) => (
-                      <article className="rounded-xl bg-neutral-50 p-5" key={spouse.dni}>
-                        <p className="text-xs font-bold uppercase tracking-wider text-primary">
-                          Cónyuge {index + 1}
-                        </p>
-                        <h3 className="mt-3 font-bold leading-6 text-neutral-900">{spouse.name}</h3>
-                        <dl className="mt-4 space-y-3 text-sm">
-                          <div className="flex items-center justify-between gap-3">
-                            <dt className="text-neutral-600">DNI</dt>
-                            <dd className="font-semibold text-neutral-900">{spouse.dni}</dd>
-                          </div>
-                          <div className="flex items-center justify-between gap-3">
-                            <dt className="inline-flex items-center gap-1.5 text-neutral-600">
-                              <Phone aria-hidden="true" className="h-4 w-4" />
-                              Teléfono
-                            </dt>
-                            <dd className="font-semibold text-neutral-900">{spouse.phone}</dd>
-                          </div>
-                        </dl>
-                      </article>
-                    ))}
-                  </div>
-                </section>
-
-                <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
-                  <div className="flex items-center gap-3">
-                    <MapPin aria-hidden="true" className="h-6 w-6 text-primary" />
-                    <h2 className="text-xl font-extrabold text-neutral-900">Datos del matrimonio</h2>
-                  </div>
-                  <dl className="mt-6 grid gap-5 sm:grid-cols-2">
-                    <div className="rounded-xl bg-neutral-50 p-4">
-                      <dt className="text-sm text-neutral-600">Fecha de matrimonio</dt>
-                      <dd className="mt-1 font-bold text-neutral-900">15/03/2018</dd>
-                    </div>
-                    <div className="rounded-xl bg-neutral-50 p-4">
-                      <dt className="text-sm text-neutral-600">Años de casados</dt>
-                      <dd className="mt-1 font-bold text-neutral-900">8 años</dd>
-                    </div>
-                    <div className="rounded-xl bg-neutral-50 p-4">
-                      <dt className="text-sm text-neutral-600">Lugar</dt>
-                      <dd className="mt-1 font-bold text-neutral-900">El Porvenir, Trujillo</dd>
-                    </div>
-                    <div className="rounded-xl bg-neutral-50 p-4">
-                      <dt className="text-sm text-neutral-600">Último domicilio conyugal</dt>
-                      <dd className="mt-1 font-bold leading-6 text-neutral-900">
-                        Av. Sánchez Carrión N.º 720
-                      </dd>
-                    </div>
-                  </dl>
-                </section>
-
-                <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
-                  <div className="flex items-center gap-3">
-                    <FileText aria-hidden="true" className="h-6 w-6 text-primary" />
-                    <h2 className="text-xl font-extrabold text-neutral-900">Documentos subidos</h2>
-                  </div>
-
-                  <div className="mt-6 divide-y divide-neutral-100">
-                    {documents.map((document) => (
-                      <div
-                        className="flex flex-col gap-4 py-4 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between"
-                        key={document.id}
-                      >
-                        <div className="flex min-w-0 items-center gap-3">
-                          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-primary-light text-primary">
-                            <FileText aria-hidden="true" className="h-5 w-5" />
-                          </span>
-                          <div className="min-w-0">
-                            <p className="truncate text-sm font-bold text-neutral-900">{document.name}</p>
-                            <p className="mt-1 text-xs text-neutral-600">PDF · {document.size}</p>
-                          </div>
-                        </div>
-                        <button
-                          className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg border border-neutral-200 px-4 text-sm font-bold text-neutral-600 transition hover:border-primary hover:bg-primary-light hover:text-primary"
-                          onClick={() => setActionMessage(`Descarga simulada: ${document.name}`)}
-                          type="button"
-                        >
-                          <Download aria-hidden="true" className="h-4 w-4" />
-                          Descargar
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-
-                <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
-                  <div className="flex items-center gap-3">
-                    <MessageSquarePlus aria-hidden="true" className="h-6 w-6 text-primary" />
-                    <h2 className="text-xl font-extrabold text-neutral-900">Comentarios internos</h2>
-                  </div>
-
-                  <label className="mt-6 block text-sm font-bold text-neutral-800" htmlFor="internal-note">
-                    Agregar comentario
-                  </label>
-                  <textarea
-                    className="mt-2 min-h-28 w-full rounded-xl border border-neutral-200 bg-white p-4 text-base text-neutral-900 outline-none transition placeholder:text-neutral-400 focus:border-primary focus:ring-4 focus:ring-primary-light"
-                    id="internal-note"
-                    onChange={(event) => setNote(event.target.value)}
-                    placeholder="Escriba una nota visible solo para el personal administrativo..."
-                    value={note}
-                  />
-                  <div className="mt-3 flex justify-end">
-                    <button
-                      className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-50"
-                      disabled={!note.trim()}
-                      onClick={addNote}
-                      type="button"
-                    >
-                      <MessageSquarePlus aria-hidden="true" className="h-4 w-4" />
-                      Agregar nota
-                    </button>
-                  </div>
-
-                  <div className="mt-7 space-y-3">
-                    {internalNotes.map((internalNote, index) => (
-                      <article className="rounded-xl bg-neutral-50 p-4" key={`${internalNote.date}-${index}`}>
-                        <div className="flex flex-wrap items-center justify-between gap-2">
-                          <p className="text-sm font-bold text-neutral-900">{internalNote.author}</p>
-                          <p className="text-xs text-neutral-600">{internalNote.date}</p>
-                        </div>
-                        <p className="mt-2 text-sm leading-6 text-neutral-600">{internalNote.text}</p>
-                      </article>
-                    ))}
-                  </div>
-                </section>
-              </div>
-
-              <aside>
-                <section className="sticky top-28 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
-                  <h2 className="text-xl font-extrabold text-neutral-900">Timeline del trámite</h2>
-                  <p className="mt-2 text-sm leading-6 text-neutral-600">
-                    Historial y próximos hitos del expediente.
-                  </p>
-                  <div className="mt-7">
-                    <StatusTimeline items={timelineItems} />
-                  </div>
-                </section>
-              </aside>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
-  )
+    {tab === 'Historial' && <div className="detail-grid"><section className="panel"><div className="panel-heading"><div><p className="eyebrow">Bitácora</p><h3>Historial del caso</h3></div></div><div className="timeline">{[...item.events].reverse().map((event) => <article key={event.id}><i /><time>{new Intl.DateTimeFormat('es-PE', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(event.occurredAt))}</time><strong>{event.label}</strong><span>{event.actor} · {event.visibility === 'PUBLIC' ? 'Visible al ciudadano' : 'Uso interno'}</span></article>)}</div></section><aside className="panel"><div className="panel-heading"><div><p className="eyebrow">Solo personal interno</p><h3>Notas</h3></div></div>{item.notes.map((n, i) => <p className="note-item" key={i}>{n}</p>)}<form className="compact-form" onSubmit={(e) => { e.preventDefault(); if (note.trim()) { demo.addNote(item.id, note.trim()); setNote('') } }}><label>Nueva nota<textarea value={note} onChange={(e) => setNote(e.target.value)} rows="4" /></label><button className="btn btn-secondary" type="submit"><MessageSquareText /> Agregar nota interna</button></form></aside></div>}
+  </div>
 }
-
-export default ExpedienteDetallePage

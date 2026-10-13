@@ -1,1 +1,1 @@
-// TODO: Agregar los requisitos condicionales simulados.
+export { FORMS, REQUIRED_DOCUMENTS, getRequirements } from '../domain/catalogs'

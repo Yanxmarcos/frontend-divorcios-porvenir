@@ -1,0 +1,163 @@
+{
+  "source": "5-con-abogada.mp3",
+  "model": "faster-whisper large-v3-turbo int8",
+  "language": "es",
+  "duration": 763.6535,
+  "review": "Transcripción automática; no identifica hablantes; revisar cifras y términos técnicos.",
+  "segments": [
+    {
+      "start": 0.59,
+      "end": 30.06,
+      "text": "Ya, mira, acá se puede pagar unos cuotos, la primera de 273 y la segunda de 278, pero esos gustos también lo pueden pagar. Más que todo el pre-registro es para... porque nos han comentado primeramente que vienen y van a traer los documentos si están bien o que les valen, ¿no?",
+      "avg_logprob": -0.34793194775518616,
+      "no_speech_prob": 2.160003599593896e-11
+    },
+    {
+      "start": 30.06,
+      "end": 56.32,
+      "text": "Entonces esto más que todo es para que la persona, el solicitante, pueda ingresar su documento y eso le va a llegar a usted. A nosotros. Sí, le va a llegar para que ustedes puedan ahí desde el programa validarlos. Si todo está bien, o sea, le da como un ok, entonces esa persona ya puede llevarlo a participar para ahorrar el trabajo de estar viniendo hasta acá y regresar y todo. ¿Han consignado el poder también o no vinieron?",
+      "avg_logprob": -0.15623073182373404,
+      "no_speech_prob": 1.0898618812982264e-11
+    },
+    {
+      "start": 56.32,
+      "end": 85.6,
+      "text": "O sea, en el caso de que, por ejemplo, alguno de los cónyuges esté en España, ¿no? Entonces se hace un poder especial, pero también especificar que es un poder especial, no es un poder cualquiera. La notaría se llama poder especial para divorcios de municipalidades, ¿no? Porque, por ejemplo, bueno, en varios casos que vienen personas con un poder normal, entonces no se puede divorciar. Ajá, también especificarlo ahí para que no se confunda. Y ese sería el representante, ¿no? Ajá, el representante. Con poder especial. Con poder especial.",
+      "avg_logprob": -0.09100665505285617,
+      "no_speech_prob": 1.4264515783846132e-11
+    },
+    {
+      "start": 85.6,
+      "end": 113.5,
+      "text": "y en lo que es la conciliación también puedes especificarlo de una",
+      "avg_logprob": -0.36256950041827035,
+      "no_speech_prob": 1.424629511581621e-11
+    },
+    {
+      "start": 113.5,
+      "end": 194.43,
+      "text": "De MUNA o centro de conciliación? Ponen de MUNA gratuito y centro de conciliación si le pagamos, depende de los recursos. Acá, el acta de conciliación o sentencia firme, la sentencia firme lo pueden buscar en la plataforma del CED, que es la plataforma judicial. Por ejemplo, hay personas que vienen con una sentencia, pero les falta, o sea, la sentencia solamente viene de alimentos, ¿no?",
+      "avg_logprob": -0.1473525218593264,
+      "no_speech_prob": 7.616044080116513e-12
+    },
+    {
+      "start": 194.43,
+      "end": 217.55,
+      "text": "Pero nosotros necesitamos tres materias, tenencia y régimen de visitas. Entonces, por estas dos materias tendrían que ser el acta de conciliación. ¿Qué se hace en la de MUNA? En la de MUNA es gratuito. O también un centro de conciliación. Pero si es despagado, no varía, independiente. Y acá el poder por escritura pública se hace notaría. Perdón, perdón. El poder por escritura pública se hace notaría y es un poder especial.",
+      "avg_logprob": -0.11414910427161626,
+      "no_speech_prob": 1.5273511622115876e-11
+    },
+    {
+      "start": 217.55,
+      "end": 242.42,
+      "text": "Y la escritura pública de separación social y gananciales, por ejemplo, ahora tienen un carro, y esto solamente se cuenta en los bienes que están inscritos en registros públicos, los demás no. Y ahí eso se mataría. ¿Se entendieron? Sí, sí. Estamos grabando y lo repetimos. Y bueno, es para la persona que va a solicitar, ¿no?",
+      "avg_logprob": -0.1975445273247632,
+      "no_speech_prob": 9.039134024613205e-12
+    },
+    {
+      "start": 242.42,
+      "end": 270.96,
+      "text": "El proregistro, ahí hemos hecho una validación del DNI. Y bueno, solamente ingresaría a la presa, porque se hablaba por el ingeniero, que lo más adecuado sería solamente ingresar el DNI y continuar al siguiente, que serían ya los datos del matrimonio. También si pudieran agregarle alguna, para que pongan su DNI, perdón, su teléfono. Sí, eso también justamente les había comentado que sería...",
+      "avg_logprob": -0.1798435188127014,
+      "no_speech_prob": 1.1267342094056776e-11
+    },
+    {
+      "start": 271.57,
+      "end": 296.88,
+      "text": "y bueno ahí también los datos del otro cónyuge bueno la fecha de matrimonio el lugar si ha sido en el porvenir o en otro distrito este y ahí también sería tiene que tener es importante también agregarle que tiene que tener mínimo dos años de casados",
+      "avg_logprob": -0.29659768686456195,
+      "no_speech_prob": 6.047113330909237e-12
+    },
+    {
+      "start": 298.13,
+      "end": 333.25,
+      "text": "Ahí a poner la fecha automáticamente sale cuántos años de casado. Si es de menos de dos, no. Ahí da un mensaje que uno da información condicional si tienen hijos, si tienen bienes en común o un cónyuge fuera del país.",
+      "avg_logprob": -0.1938470162843403,
+      "no_speech_prob": 8.666490268482985e-12
+    },
+    {
+      "start": 333.25,
+      "end": 366.35,
+      "text": "y bueno ahí se va a poder subir los documentos de ambos",
+      "avg_logprob": -0.5494210634912763,
+      "no_speech_prob": 1.3614690104468696e-11
+    },
+    {
+      "start": 366.42,
+      "end": 439.02,
+      "text": "sí sí sí",
+      "avg_logprob": -1.523884356021881,
+      "no_speech_prob": 1.1469433042199384e-11
+    },
+    {
+      "start": 439.09,
+      "end": 470.67,
+      "text": "en el caso sea el representante también se tiene que subir la carta del poder especial que tiene es una partida en la inscripción tiene un código y bueno si la persona quiere ver el seguimiento",
+      "avg_logprob": -0.3840669776712145,
+      "no_speech_prob": 6.493088618858556e-12
+    },
+    {
+      "start": 470.67,
+      "end": 512.27,
+      "text": "¿Cuántos años tiene? 23 ¿Y cómo sería con las firmas? Porque al iniciar presentan una solicitud y declaraciones juradas con firmas y huellas. Estaneado, ¿no? Que lo imprima, que lo llene y lo estanea.",
+      "avg_logprob": -0.25015030872254146,
+      "no_speech_prob": 1.3505528292934166e-11
+    },
+    {
+      "start": 513.52,
+      "end": 555.97,
+      "text": "Al final es pre-registro porque tienen que tenerlo todo un mes aparte. Y ahí ya recién empezaría lo que es el trámite, ¿verdad? Es café de ahí. Ahí está. ¿Usted es el de la nacional? Sí. Esa es la parte de usted, de la sobada. Su inicio de sesión. ¿Y hablar del expediente? Tenemos entendido que les pedían un reporte de expediente, ¿verdad? Ajá, nos pedían de resoluciones.",
+      "avg_logprob": -0.22847612069121429,
+      "no_speech_prob": 1.0458110072386617e-11
+    },
+    {
+      "start": 555.97,
+      "end": 585.65,
+      "text": "¿Mensual? ¿Mensual? Sí, bueno, acá está como un tipo de daño para que lo vea más y menos de cómo se ha ido haciendo. Y acá puede consultar, ¿no?, de los que se ha ingresado, número de trámite, los solicitantes, si puedes. O sea, pero ustedes lo tienen igualar. Sí, lo tienen, pero un Excel, pero no se actualiza y se puede aportar. Pero también está muy bueno para poder importar.",
+      "avg_logprob": -0.3935948819727511,
+      "no_speech_prob": 1.460953059917447e-11
+    },
+    {
+      "start": 586.38,
+      "end": 617.74,
+      "text": "Por ejemplo, la segunda solicitud tiene un nuevo expediente, un número de expediente nuevo, es el mismo.",
+      "avg_logprob": -0.2804619598388672,
+      "no_speech_prob": 1.6184498186078144e-11
+    },
+    {
+      "start": 617.74,
+      "end": 647.98,
+      "text": "Y los oficios se sacan con ese número. Se concluye el proceso. ¿Y ese número se lo dan ustedes? Siempre que tú ingreses un documento en esa de partes te dan un número. Entonces, el proceso de la ley establece que son dos solicitudes. La segunda es para la distribución del vínculo. Entonces, los oficios y los demás datos salen con el segundo número de expedientes. ¿Y ahí ese número de expedientes lo dan a esa parte? Ajá, a esa parte. ¿Ambos? ¿Los dos? Los dos, sí. Porque a nosotros nos llegan los documentos en esa de parte.",
+      "avg_logprob": -0.09665486424952954,
+      "no_speech_prob": 1.3954748814826168e-11
+    },
+    {
+      "start": 648.46,
+      "end": 679.62,
+      "text": "¿Y eso se lo hace parte de ustedes o a la persona? Ponen el numerito ahí y está que consignan en su sistema.",
+      "avg_logprob": -0.4449080747942771,
+      "no_speech_prob": 1.1583002786086372e-11
+    },
+    {
+      "start": 679.62,
+      "end": 707.07,
+      "text": "el solicitante, cambiar el documento en caso esté mal. Yo una vez que ya está listo, llegaría con el documento acá y recién pasaría ya a mesa de partes. Una parte de audiencias. Ahí hemos hecho como una agenda para las audiencias, porque son en persona, no tienen que venir acá. Sí. Entonces ahí la agendamos ustedes.",
+      "avg_logprob": -0.30529295525899747,
+      "no_speech_prob": 1.5029531438837118e-11
+    },
+    {
+      "start": 707.07,
+      "end": 744.83,
+      "text": "La idea también es que aquí en el sistema se pueda notificar a la persona. O sea, que ahora ahí darle un clic y que el sistema mande un mensaje por WhatsApp a la persona y les avise que tienen que venir tal día, tal hora. Esa es la idea en esta parte. Presencial. Sí o sí presencial o se puede hacer virtual también. Presencial. La audiencia es presencial. Siempre presencial. Sí o sí presencial. No sé la idea que faltaría implementar un poco más.",
+      "avg_logprob": -0.191649485478359,
+      "no_speech_prob": 1.6112094297637825e-11
+    },
+    {
+      "start": 744.83,
+      "end": 763.65,
+      "text": "Ya, ya chicos, adelante.",
+      "avg_logprob": -0.6492403373122215,
+      "no_speech_prob": 6.60127716378689e-11
+    }
+  ]
+}

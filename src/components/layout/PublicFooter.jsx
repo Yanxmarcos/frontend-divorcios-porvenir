@@ -1,7 +1,7 @@
 import { Mail, MapPin, Phone } from 'lucide-react'
 
 const footerLinks = [
-  { label: 'Consulta de expediente', href: '/consulta-estado' },
+  { label: 'Consulta de expediente', href: '/consulta' },
   { label: 'Iniciar pre-registro', href: '/pre-registro' },
   { label: 'Portal municipal', href: 'https://muniporvenir.gob.pe/' },
 ]
@@ -61,8 +61,8 @@ function PublicFooter() {
           </h2>
           <ul className="mt-4 space-y-3 text-sm leading-6">
             <li className="flex gap-2"><MapPin aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-primary-light" />Av. Sánchez Carrión 500, El Porvenir</li>
-            <li className="flex gap-2"><Phone aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-primary-light" />044 - 400503</li>
-            <li className="flex gap-2"><Mail aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-primary-light" /><span className="break-all">consultamesadepartes@muniporvenir.gob.pe</span></li>
+            <li className="flex gap-2"><Phone aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-primary-light" />972 459 268</li>
+            <li className="flex gap-2"><Mail aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-primary-light" /><span className="break-all">consultas_divorcios@muniporvenir.gob.pe</span></li>
           </ul>
         </address>
       </div>

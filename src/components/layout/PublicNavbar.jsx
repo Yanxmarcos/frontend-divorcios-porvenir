@@ -3,10 +3,10 @@ import { useState } from 'react'
 
 const navigation = [
   { label: 'Municipalidad', href: 'https://muniporvenir.gob.pe/' },
-  { label: 'Servicios', href: '#accesos' },
-  { label: 'Oficina de Divorcios', href: '#tramite' },
-  { label: 'Consulta de expediente', href: '/consulta-estado' },
-  { label: 'Transparencia', href: 'https://muniporvenir.gob.pe/' },
+  { label: 'Requisitos y formatos', href: '/#requisitos' },
+  { label: 'Pre-registro', href: '/pre-registro' },
+  { label: 'Consultar trámite', href: '/consulta' },
+  { label: 'Acceso interno', href: '/admin/login' },
 ]
 
 function PublicNavbar() {
@@ -14,7 +14,7 @@ function PublicNavbar() {
 
   return (
     <header className="border-b border-neutral-200 bg-white shadow-sm">
-      <div className="h-1 bg-primary" />
+      <div className="h-1 bg-[#a51f2b]" />
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-8 lg:px-12">
         <a
           aria-label="Ir al inicio de Divorcio Municipal"
